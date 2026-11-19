@@ -49,7 +49,7 @@ button{cursor:pointer;border:0;background:none;padding:0;text-align:left}
 .lab{font-size:12px;letter-spacing:.06em;color:var(--soft)}
 .card.dark .lab{color:#f0c4a3}.card.mint .lab{color:var(--teal)}
 .big{font-weight:300;font-size:22px;letter-spacing:-.02em;line-height:1.2}
-.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border-radius:999px;padding:14px 22px;font-size:17px;background:var(--white);box-shadow:0 6px 18px rgba(16,38,74,.12)}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border-radius:999px;padding:14px 22px;font-size:17px;background:var(--white);color:var(--ink);box-shadow:0 6px 18px rgba(16,38,74,.12)}
 .btn.dark{background:var(--ink);color:var(--white);box-shadow:none}
 .btn.ghost{background:none;box-shadow:none;border:1px solid var(--line);font-size:15px}
 .btn.rust{background:var(--rust);color:var(--white);box-shadow:none}
@@ -123,14 +123,82 @@ input[type=range]{width:100%;accent-color:var(--teal)}
 .jump button{display:block;font-size:14px;color:var(--soft);padding:4px 0}
 .jump button:hover{color:var(--ink)}
 .reset{font-size:13px;color:var(--rust);align-self:flex-start}
+/* view tabs */
+[hidden]{display:none!important}
+.viewtabs{display:flex;gap:4px;padding:5px;border-radius:999px;background:var(--paper);width:max-content;margin:20px auto 0;box-shadow:0 4px 14px rgba(16,38,74,.06)}
+.viewtabs button{padding:10px 18px;border-radius:999px;font-size:15px;color:var(--soft)}
+.viewtabs button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.stage{max-width:1240px}
+/* watch */
+.watchcol{flex:none;width:250px;display:flex;flex-direction:column;align-items:center;gap:14px;position:sticky;top:24px}
+.watch{position:relative;width:230px;height:320px}
+.strap{position:absolute;left:50px;width:130px;height:60px;background:#2a7a76}
+.strap.t{top:0;border-radius:16px 16px 0 0}.strap.b{bottom:0;border-radius:0 0 16px 16px}
+.case{position:absolute;top:40px;left:5px;width:220px;height:240px;border-radius:62px;background:#1b1f24;box-shadow:0 18px 40px rgba(16,38,74,.25);padding:11px}
+.crown{position:absolute;top:140px;right:-1px;width:9px;height:36px;border-radius:5px;background:#3a4048}
+.wscreen{position:relative;width:100%;height:100%;border-radius:52px;background:#000;color:#fff;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px;text-align:center;isolation:isolate}
+.wglow{position:absolute;left:50%;top:50%;width:190px;height:190px;margin:-95px 0 0 -95px;border-radius:50%;z-index:-1;background:radial-gradient(circle,#8fcdc3 0%,#3f9a95 35%,rgba(30,100,96,.6) 70%,rgba(0,0,0,0) 100%)}
+.wglow.breathe{animation:wb 10s ease-in-out infinite}
+@keyframes wb{0%,100%{transform:scale(.7)}40%{transform:scale(1.15)}}
+.wsm{font-size:11px;opacity:.65}.wmid{font-size:15px;line-height:1.15}.wbig{font-size:34px;font-weight:300;letter-spacing:-.03em;line-height:1}
+.wbtn{width:100%;border-radius:999px;padding:8px 10px;font-size:13px;font-weight:500;background:rgba(255,255,255,.14);color:#fff;text-align:center}
+.wbtn.light{background:#fff;color:var(--ink)}.wbtn.teal{background:var(--teal)}
+.wrow{display:flex;gap:6px;width:100%}
+.wscreen input[type=range]{width:100%;accent-color:#8fcdc3}
+.wcap{font-size:13px;color:var(--soft);text-align:center;line-height:1.4;min-height:54px}
+.wsim{font-size:12px;color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+/* portal */
+.portal{max-width:1240px;margin:20px auto 40px;border-radius:18px;overflow:hidden;background:#f6f1ea;box-shadow:0 20px 50px rgba(16,38,74,.16)}
+.pbar{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;background:var(--ink);color:#fff;font-size:15px}
+.pbar b{font-weight:500}.pbar span{opacity:.75;font-size:14px}
+.pgrid{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:640px}
+.pside{background:#efe7dc;padding:20px 16px;display:flex;flex-direction:column;gap:8px}
+.pside .lab{font-weight:500;letter-spacing:.08em;text-transform:uppercase;font-size:11px}
+.pclient{display:flex;gap:10px;align-items:center;padding:10px;border-radius:14px;width:100%}
+.pclient.on{background:#fff}
+.pav{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;background:#c9d3d0;font-weight:500;flex:none}
+.pclient.on .pav{background:var(--teal)}
+.pclient small{display:block;font-size:12px;color:var(--soft)}
+.pmain{padding:22px 24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.ptop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.ptop h2{font-weight:300;font-size:28px;letter-spacing:-.02em;margin:0}
+.ptop p{margin:2px 0 0;font-size:14px;color:var(--soft)}
+.pchips{display:flex;flex-wrap:wrap;gap:8px}
+.pchip{font-size:12px;padding:6px 12px;border-radius:999px;background:#fff;color:var(--soft)}
+.pchip.ok{background:var(--mint);color:var(--teal)}.pchip.warn{background:var(--peach);color:var(--rust)}
+.pkpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pp{background:#fff;border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.pp .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);font-weight:500}
+.pp .v{font-size:30px;font-weight:300;letter-spacing:-.02em}
+.pp .d{font-size:13px;color:var(--soft)}
+.pp.locked{background:transparent;border:1.5px dashed rgba(16,38,74,.2);color:var(--soft)}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px}
+.pcol{display:flex;flex-direction:column;gap:12px;min-width:0}
+.pp h3{margin:0;font-size:15px;font-weight:500}
+.plist{display:flex;flex-direction:column;gap:8px;font-size:14px}
+.plist div{display:flex;gap:10px}.plist b{font-weight:500;color:var(--soft);font-size:13px;width:34px;flex:none}.plist span{flex:1}.plist i{font-style:normal;font-weight:500;font-size:13px}
+.pempty{padding:60px 30px;text-align:center;color:var(--soft)}
+.pempty h2{font-weight:300;font-size:28px;color:var(--ink);margin:0 0 8px}
+.pbtn{border-radius:999px;padding:10px 18px;background:var(--ink);color:#fff;font-size:14px}
+.pbtn.done{background:var(--mint);color:var(--teal)}
+.chartwrap{overflow-x:auto}
+@media (max-width:1100px){.stage{flex-wrap:wrap}.watchcol{position:static}}
+@media (max-width:900px){.pgrid{grid-template-columns:1fr}.pside{flex-direction:row;flex-wrap:wrap}.prow{grid-template-columns:1fr}.pkpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:760px){.stage{flex-direction:column;align-items:center}.side{position:static;width:100%;max-width:390px}}
 @media (max-width:430px){.phone{height:min(844px,calc(100vh - 32px));min-height:680px;border-radius:44px;padding:8px}.screen{border-radius:38px}}
 @media (prefers-reduced-motion:reduce){.orb.breathe{animation:none}.pulse,.toggle::after,.orb{transition:none}}
 </style>
 </head>
 <body>
-<div class="stage">
+<nav class="viewtabs" aria-label="Prototype view"><button data-view="client" aria-pressed="true">Client app and watch</button><button data-view="portal" aria-pressed="false">Psychologist view</button></nav>
+<div class="portal" id="portal" hidden></div>
+<div class="stage" id="stageClient">
   <div class="phone"><div class="screen" id="screen"><div class="island"></div><div class="orb" id="orb"></div><div class="view" id="view"></div></div></div>
+  <div class="watchcol" aria-label="Watch companion">
+    <div class="watch"><div class="strap t"></div><div class="strap b"></div><div class="case"><div class="wscreen" id="wscreen"></div></div><div class="crown"></div></div>
+    <div class="wcap" id="wcap"></div>
+    <button class="wsim" id="wsim" hidden>simulate a racing heart</button>
+  </div>
   <aside class="side" aria-label="Prototype guide">
     <h1>KinSpace</h1>
     <p>A working prototype of the full app: onboarding, a practice session, evening reflection, community, help and settings. Tap through it, or jump to a screen. Your choices are kept in this browser only.</p>
@@ -142,12 +210,14 @@ input[type=range]{width:100%;accent-color:var(--teal)}
 
 <script>
 (() => {
-const KEY="kinspace.proto.v2";
+const KEY="kinspace.proto.v3";
 const DEF={onboarded:false,route:"alone",goal:"give a short toast at my brother’s sangeet",shortGoal:"stay 30 minutes at saturday’s dinner",forWhom:"my brother",size:"medium",reminders:true,
  today:"before",step:"talk to one stranger and learn their birthday.",line:"is your birthday soon? mine’s in may.",before:70,after:40,outcome:"part",
  reflect:{thoughts:"I thought they’d find it weird.",feelings:"heart racing, then calmer",behaviours:"I stayed, and asked one question"},
  rungs:[["say hi to a neighbour","done"],["talk to one stranger, learn their birthday","done"],["stay 30 min at a cousin’s dinner","part"],["say one line on a family call","next"],["give the toast at the sangeet","goal"]],
- attempts:3,therapist:{connected:false,name:"Dr. A. Rao"},share:{steps:true,tension:true,patterns:true,journal:false},
+ attempts:3,therapist:{connected:false,name:"Dr. A. Rao"},share:{steps:true,tension:true,patterns:true,journal:false,body:false},
+ watch:{paired:false,haptics:true,body:false,offer:false},watchChecked:false,reviewed:false,
+ note:"Great that you stayed at the café. Let’s try the family call next.",agreed:["repeat the café step"],
  posts:[["Left the dinner early again. Still went though.","2 h"],["Said hi to my neighbour. Took me three weeks.","yesterday"]],draft:"",
  replay:{fact:"I went to the café at 6. I asked the barista one question. I stayed 25 minutes.",fear:"they’ll think I’m weird.",happened:"no",friend:""},
  quiet:true,nudge:true,strengthRem:true};
@@ -165,6 +235,13 @@ const chips=(arr,key,glass)=>`<div class="chips">${arr.map(v=>`<button class="ch
 const navBar=a=>`<div class="grow"></div><nav class="nav" aria-label="Main">${["home","community","help"].map(k=>`<button data-go="${k==="home"?"home":k==="community"?"community":"helphome"}" ${a===k?'aria-current="page"':""}>${k}</button>`).join("")}</nav>`;
 const icons={relieve:'<svg viewBox="0 0 28 28" fill="none" stroke="#10264a" stroke-width="1.4" stroke-linecap="round"><circle cx="14" cy="14" r="12"/><path d="M8.5 12.5q1.5-1.5 3 0M16.5 12.5q1.5-1.5 3 0M10 18q4 3 8 0"/></svg>',reflect:'<svg viewBox="0 0 28 28" fill="none" stroke="#10264a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 4l6 6L11 23H5v-6z"/><path d="M15 7l6 6M3 26h22"/></svg>',track:'<svg viewBox="0 0 28 28" fill="none" stroke="#10264a" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h20M4 14h14M4 21h9"/><circle cx="22" cy="21" r="2.5"/></svg>'};
 const hello=()=>{const h=new Date().getHours(); return h<12?"good morning":h<18?"good afternoon":"good evening";};
+const ATT=[["Sun","café: one question",70,40,4,"part of it"],["Tue","cousin’s dinner",75,null,null,"not today"],["Wed","metro: say hi",65,38,3,"did it"],["Thu","class: one question",72,45,5,"did it"],["Fri","family call",60,30,3,"part of it"],["Sat","office lunch",74,45,4,"did it"]];
+function bodyChart(w,showBody){const n=ATT.length, W=w, H=200, L=30, step=(W-L-20)/n; let s=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block" role="img" aria-label="Felt tension before and after each attempt${showBody?", with minutes for the body to settle":""}">`;
+ for(const v of [0,50,100]){const y=160-1.3*v; s+=`<line x1="${L}" x2="${W-10}" y1="${y}" y2="${y}" stroke="#10264a" stroke-opacity=".08"/><text x="0" y="${y+4}" font-size="10" fill="#4d5d78" font-family="Inter Tight,sans-serif">${v}</text>`;}
+ let line=""; ATT.forEach(([d,,b,a,m],i)=>{const x=L+step*(i+.5); s+=`<rect x="${x-12}" y="${160-1.3*b}" width="10" height="${1.3*b}" rx="5" fill="#b8dfd2"/>`; if(a!=null) s+=`<rect x="${x+2}" y="${160-1.3*a}" width="10" height="${1.3*a}" rx="5" fill="#2f8a86"/>`; else s+=`<text x="${x}" y="150" text-anchor="middle" font-size="9" fill="#c06a43" font-family="Inter Tight,sans-serif">not today</text>`;
+  if(showBody&&m!=null){const yy=160-m*13; line+=(line?" L":"M")+x+" "+yy; s+=`<circle cx="${x}" cy="${yy}" r="4" fill="#c06a43"/>`;} s+=`<text x="${x}" y="182" text-anchor="middle" font-size="10" fill="#4d5d78" font-family="Inter Tight,sans-serif">${d}</text>`;});
+ if(line) s+=`<path d="${line}" stroke="#c06a43" stroke-width="2" stroke-dasharray="4 4" fill="none"/>`; return s+"</svg>";}
+const legend=b=>`<div style="display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--soft)"><span><i style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#b8dfd2;margin-right:5px"></i>felt, before</span><span><i style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#2f8a86;margin-right:5px"></i>felt, after</span>${b?`<span><i style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#c06a43;margin-right:5px"></i>minutes for body to settle</span>`:""}</div>`;
 const doneN=()=>S.rungs.filter(r=>r[1]==="done"||r[1]==="part").length;
 
 /* ---------- SCREENS ---------- */
@@ -189,7 +266,7 @@ feedback:()=>(setOrb("mid"),`<span class="p" style="font-size:13px">saved</span>
 replay1:()=>(setOrb("low"),`<button class="back" data-go="home">not tonight</button>${steps(3,0)}<span class="eyebrow">night replay · 1 of 3</span><h1 class="h l">what happened?</h1><p class="p">Just the facts, like a weather report.</p><div class="card"><textarea class="field" rows="4" id="fact" style="padding:0;background:none;font-size:18px">${esc(S.replay.fact)}</textarea></div><div class="grow"></div><button class="btn" data-act="r1">next&nbsp;›</button>`),
 replay2:()=>(setOrb("low"),`<button class="back" data-go="replay1">← back</button>${steps(3,1)}<span class="eyebrow">night replay · 2 of 3</span><h1 class="h l">what did you<br>predict?</h1><div class="card"><span class="lab">I feared</span><span class="big" style="font-size:18px">“${esc(S.replay.fear)}”</span></div><span>did it happen?</span><div class="chips">${["no","a bit","yes"].map(v=>`<button class="chip" aria-pressed="${S.replay.happened===v}" data-hap="${v}">${v}</button>`).join("")}</div><div class="card mint"><div class="row"><span>tension before</span><b style="color:var(--teal)">${S.before}</b></div><div class="row"><span>tension after</span><b style="color:var(--teal)">${S.after}</b></div></div><div class="grow"></div><button class="btn" data-go="replay3">next&nbsp;›</button>`),
 replay3:()=>(setOrb("low"),`<button class="back" data-go="replay2">← back</button>${steps(3,2)}<span class="eyebrow">night replay · 3 of 3</span><h1 class="h l">what would you<br>tell a friend?</h1><div class="card"><textarea class="field" rows="3" id="friend" style="padding:0;background:none;font-size:18px" placeholder="you showed up. that was the hard part.">${esc(S.replay.friend)}</textarea></div><div class="chips">${["you showed up","nobody noticed what you noticed","smaller steps still count"].map(v=>`<button class="chip" data-friend="${v}">${v}</button>`).join("")}</div><div class="grow"></div><button class="btn dark" data-act="closeDay">close the day&nbsp;›</button>`),
-track:()=>(setOrb("top"),`<button class="back" data-go="home">← home</button><h1 class="h">track</h1><p class="p">Tension before and after each attempt this week (0–100).</p><div class="card">${chart()}<span class="p" style="font-size:12px">light: before · teal: after</span></div><div class="card mint"><span>on average, tension dropped <b style="font-weight:600">27 points</b> after you tried.</span></div><button class="item" data-go="patterns"><span class="t"><b>patterns we noticed</b><small>with the reasons</small></span>›</button><div class="grow"></div>`),
+track:()=>(setOrb("top"),`<button class="back" data-go="home">← home</button><h1 class="h">track</h1><p class="p">Tension before and after each attempt this week (0–100).</p><div class="card">${chart()}<span class="p" style="font-size:12px">light: before · teal: after</span></div><div class="card mint"><span>on average, tension dropped <b style="font-weight:600">27 points</b> after you tried.</span></div>${S.watch.body?`<button class="item" data-go="body"><span class="t"><b>body signals</b><small>from your watch, after each attempt</small></span>›</button>`:`<button class="item" data-go="watch"><span class="t"><b>add a watch</b><small>haptic breathing; body signals optional</small></span>›</button>`}<button class="item" data-go="patterns"><span class="t"><b>patterns we noticed</b><small>with the reasons</small></span>›</button><div class="grow"></div>`),
 patterns:()=>(setOrb("none"),`<button class="back" data-go="track">← track</button><h1 class="h">patterns we noticed</h1><p class="p">Suggestions, not judgements. You decide what to keep.</p>${[["family gatherings after work feel hardest","4 of your 6 hardest ratings were evening family events."],["starting small helps you stay longer","Small steps: average 24 minutes. Full steps: 9."]].map(([t,w],i)=>`<div class="card"><span class="big" style="font-size:18px">${t}</span><div class="card mint" style="padding:12px 14px;border-radius:16px"><span class="lab">why we think so</span><span style="font-size:14px">${w}</span></div><div class="chips"><button class="chip" aria-pressed="true" data-pat="${i}">keep</button><button class="chip" data-pat="${i}">not right</button></div></div>`).join("")}<div class="grow"></div><button class="btn dark" data-go="${S.therapist.connected?"preview":"connected"}">share with my therapist&nbsp;›</button><button class="btn ghost" data-go="ladder">keep private</button>`),
 ladder:()=>(setOrb("top"),`<button class="back" data-go="home">← home</button><div class="card dark"><span class="lab">my goal</span><span class="big" style="color:#fff">${esc(S.goal)}</span><span style="font-size:14px;opacity:.85">♡ for ${esc(S.forWhom)}</span></div>${S.rungs.slice().reverse().map((r,i)=>`<div class="item" style="${r[1]==="next"?"background:var(--mint)":""}"><b style="font-weight:300;font-size:20px;color:var(--teal);width:20px">${5-i}</b><span class="t" style="font-size:15px">${esc(r[0])}</span><span style="color:${r[1]==="goal"?"var(--rust)":"var(--teal)"};font-weight:500">${{goal:"★",next:"next",part:"◐",done:"✓"}[r[1]]}</span></div>`).join("")}<div class="grow"></div><button class="btn ghost" data-act="toHome">back to today</button>`),
 community:()=>(setOrb("top"),`<div class="wm">kin<span>space</span></div><h1 class="h l">you’re not<br>the only one.</h1><div class="card glass"><span class="lab" style="color:#fff">this week, near you</span><span class="h" style="color:#fff;font-size:28px">12 people practising</span><span style="font-size:13px;opacity:.85">your area · opt-in · no profiles</span></div><span class="eyebrow">message dump</span>${S.posts.map((p,i)=>`<button class="card" data-post="${i}"><span style="font-size:16px">${esc(p[0])}</span><span class="lab">anonymous · ${p[1]} · ⋯</span></button>`).join("")}<button class="btn dark" data-go="write">write something</button>${navBar("community")}`),
@@ -198,12 +275,14 @@ posted:()=>(setOrb("mid"),`<div class="grow"></div><div class="card glass" style
 helphome:()=>(setOrb("none"),`<div class="wm">kin<span>space</span></div><h1 class="h l">help, when<br>you want it.</h1>${S.therapist.connected?`<div class="card dark"><span class="lab">your therapist</span><span class="big" style="color:#fff">${S.therapist.name} · connected</span><span style="font-size:13px;opacity:.8">sharing: ${Object.entries(S.share).filter(e=>e[1]).map(e=>e[0]).join(", ")||"nothing"}</span></div>`:`<button class="card dark" data-go="code"><span class="lab">your therapist</span><span class="big" style="color:#fff">connect with a code</span><span style="font-size:13px;opacity:.8">optional · nothing is shared until you choose</span></button>`}
  <button class="item" data-go="${S.therapist.connected?"share":"code"}"><span class="t"><b>what I share</b><small>choose and preview, stop any time</small></span>›</button><button class="item" data-go="fromther"><span class="t"><b>from my therapist</b><small>agreed steps · reviewed Monday</small></span>›</button><button class="item" data-go="findhelp"><span class="t"><b>find help</b><small>what kind of support fits me</small></span>›</button><button class="item urgent" data-go="urgent"><span class="t"><b>urgent help</b><small>Tele-MANAS 14416 · free, 24×7</small></span>›</button>${navBar("help")}`),
 connected:()=>(setOrb("mid"),`<div class="grow"></div><div class="card glass" style="padding:26px 18px;gap:10px"><span class="h" style="color:#fff">connected with<br>${S.therapist.name}</span><span>Nothing is shared until you choose. You’ll always see a preview first.</span></div><div class="grow"></div><button class="btn" data-go="share">choose what to share&nbsp;›</button><button class="btn ghost" data-act="${S.onboarded?"toHelp":"toGoal"}">not now</button>`),
-share:()=>(setOrb("none"),`<button class="back" data-go="helphome">← help</button><h1 class="h">what ${S.therapist.name.split(" ").pop()} can see</h1><div class="card" style="gap:14px">${[["steps","steps and attempts","did it, part of it, not today"],["tension","tension before and after","0–100 ratings"],["patterns","pattern summary","with the reasons"],["journal","journal and night replay","your own words"]].map(([k,t,d])=>`<div class="row"><span><span style="display:block;font-size:16px">${t}</span><small style="color:var(--soft)">${d}</small></span>${tog("share."+k,S.share[k])}</div>`).join("")}</div><div class="card mint"><span class="lab">when</span><span>weekly, the evening before your session</span></div><div class="grow"></div><button class="btn dark" data-go="preview">preview&nbsp;›</button>`),
-preview:()=>(setOrb("none"),`<button class="back" data-go="share">← back</button><h1 class="h">exactly what<br>they will see</h1><div class="card dash" style="gap:10px"><span class="lab">week of 15–21</span>${S.share.steps?`<span class="big" style="font-size:17px">${S.attempts} steps tried · 1 partial · 1 not today</span>`:""}${S.share.tension?`<span>tension: 72 → 41 on average</span>`:""}${S.share.patterns?`<span>pattern: evening family events feel hardest (4 of 6 ratings)</span>`:""}<span style="font-size:13px;color:var(--soft)">journal: ${S.share.journal?"shared":"not shared"}</span>${!S.share.steps&&!S.share.tension&&!S.share.patterns&&!S.share.journal?'<span class="p">Nothing selected. Nothing will be sent.</span>':""}</div><div class="grow"></div><button class="btn dark" data-act="send">send summary&nbsp;›</button><button class="btn ghost" data-go="helphome">keep private</button><span class="link" style="font-size:13px">You can stop sharing any time in help.</span>`),
-fromther:()=>(setOrb("none"),`<button class="back" data-go="helphome">← help</button><h1 class="h">from ${S.therapist.name}</h1><span class="chip" style="align-self:flex-start;background:var(--mint);border:0;color:var(--teal)">✓ summary reviewed · Monday</span><div class="card"><span class="lab">a note</span><span class="big" style="font-size:17px">“Great that you stayed at the café. Let’s try the family call next.”</span></div><span class="eyebrow">agreed steps</span><div class="item"><span class="t"><b>say one line on the family call</b><small>agreed Monday</small></span><span style="color:var(--teal)">✓</span></div><div class="item"><span class="t"><b>repeat the café step</b><small>agreed last week</small></span><span style="color:var(--teal)">✓</span></div><div class="grow"></div><button class="btn dark" data-go="ladder">see my ladder&nbsp;›</button>`),
+share:()=>(setOrb("none"),`<button class="back" data-go="helphome">← help</button><h1 class="h">what ${S.therapist.name.split(" ").pop()} can see</h1><div class="card" style="gap:14px">${[["steps","steps and attempts","did it, part of it, not today"],["tension","tension before and after","0–100 ratings"],["patterns","pattern summary","with the reasons"],["journal","journal and night replay","your own words"],...(S.watch.body?[["body","body signals","weekly summary only, never live"]]:[])].map(([k,t,d])=>`<div class="row"><span><span style="display:block;font-size:16px">${t}</span><small style="color:var(--soft)">${d}</small></span>${tog("share."+k,S.share[k])}</div>`).join("")}</div><div class="card mint"><span class="lab">when</span><span>weekly, the evening before your session</span></div><div class="grow"></div><button class="btn dark" data-go="preview">preview&nbsp;›</button>`),
+preview:()=>(setOrb("none"),`<button class="back" data-go="share">← back</button><h1 class="h">exactly what<br>they will see</h1><div class="card dash" style="gap:10px"><span class="lab">week of 15–21</span>${S.share.steps?`<span class="big" style="font-size:17px">6 steps tried · 3 did it · 2 partial · 1 not today</span>`:""}${S.share.tension?`<span>tension: 72 → 41 on average</span>`:""}${S.share.patterns?`<span>pattern: evening family events feel hardest (4 of 6 ratings)</span>`:""}${S.share.body&&S.watch.body?`<span>body: settled in about 4 min on average (5 of 6 attempts)</span>`:""}<span style="font-size:13px;color:var(--soft)">journal: ${S.share.journal?"shared":"not shared"}</span>${!S.share.steps&&!S.share.tension&&!S.share.patterns&&!S.share.journal?'<span class="p">Nothing selected. Nothing will be sent.</span>':""}</div><div class="grow"></div><button class="btn dark" data-act="send">send summary&nbsp;›</button><button class="btn ghost" data-go="helphome">keep private</button><span class="link" style="font-size:13px">You can stop sharing any time in help.</span>`),
+fromther:()=>(setOrb("none"),`<button class="back" data-go="helphome">← help</button><h1 class="h">from ${S.therapist.name}</h1><span class="chip" style="align-self:flex-start;background:${S.reviewed?"var(--mint)":"var(--peach)"};border:0;color:${S.reviewed?"var(--teal)":"var(--rust)"}">${S.reviewed?"✓ summary reviewed":"waiting for review · at their own time"}</span><div class="card"><span class="lab">a note</span><span class="big" style="font-size:17px">“${esc(S.note)}”</span></div><span class="eyebrow">agreed steps</span>${S.agreed.map(a=>`<div class="item"><span class="t"><b>${esc(a)}</b><small>agreed with ${S.therapist.name}</small></span><span style="color:var(--teal)">✓</span></div>`).join("")}<div class="grow"></div><button class="btn dark" data-go="ladder">see my ladder&nbsp;›</button>`),
 findhelp:()=>(setOrb("none"),`<button class="back" data-go="helphome">← help</button><h1 class="h">what would help<br>most right now?</h1><div class="chips">${["someone to talk to","practical steps","not sure"].map(v=>`<button class="chip" aria-pressed="${(S.need||"practical steps")===v}" data-set="need" data-val="${v}">${v}</button>`).join("")}</div><span class="eyebrow">options that fit</span>${(S.need==="someone to talk to"?[["peer support group","free · weekly · online"],["college counselling cell","free · in person"]]:S.need==="not sure"?[["what is a first session like?","a 2-minute explainer"],["college counselling cell","free · in person · this week"]]:[["online CBT therapist","practical, step-based · ₹800–1,500"],["college counselling cell","free · in person · this week"]]).map(([t,d])=>`<div class="item"><span class="t"><b>${t}</b><small>${d}</small></span>›</div>`).join("")}<p class="p" style="font-size:13px">No labels or diagnosis needed. These are examples for the prototype.</p><div class="grow"></div>`),
 urgent:()=>(setOrb("none"),`<button class="back" data-go="helphome">← back</button><h1 class="h">if you feel unsafe<br>right now</h1><div class="card peach" style="gap:10px"><span class="big" style="color:var(--rust);font-size:24px">Tele-MANAS</span><span>Free, 24×7, in many Indian languages.</span><button class="btn rust" data-act="call">call 14416</button><span style="font-size:13px;color:var(--soft);user-select:all">Number: 14416</span></div><span class="eyebrow">or reach someone you trust</span><div class="item"><span class="t"><b>Rahul (brother)</b><small>call or message</small></span>›</div><div class="item"><span class="t"><b>Meera (friend)</b><small>call or message</small></span>›</div><button class="item" data-go="pocket"><span class="t"><b>breathe with me</b><small>one minute, guided</small></span>›</button><div class="grow"></div><p class="p" style="font-size:13px;text-align:center">KinSpace is not an emergency service. If you are in immediate danger, call 112.</p>`),
-me:()=>(setOrb("top"),`<button class="back" data-go="home">← home</button><h1 class="h l">me</h1><div class="card"><span class="lab">my strengths</span><div class="chips">${["good listener","curious","loyal"].map(s=>`<span class="chip" style="background:var(--mint);border:0">${s}</span>`).join("")}</div></div><button class="item" data-go="reminders"><span class="t"><b>reminders and quiet hours</b><small>gentle · quiet 10 pm – 8 am</small></span>›</button><button class="item" data-go="privacy"><span class="t"><b>privacy and data</b><small>consent log, download, delete</small></span>›</button><div class="item"><span class="t"><b>language</b><small>English</small></span>›</div><div class="item"><span class="t"><b>about KinSpace</b><small>a wellbeing service, not a medical device</small></span>›</div><div class="grow"></div>`),
+watch:()=>(setOrb("top"),`<button class="back" data-go="me">← me</button><h1 class="h">your watch can help<br>in the moment</h1><div class="card"><span class="lab" style="color:var(--teal)">it will</span><span style="font-size:14px;line-height:1.6">· breathe with you through taps, screen off<br>· run the session timer on your wrist<br>· offer a smaller step, or “done”</span></div><div class="card peach"><span class="lab" style="color:var(--rust)">it won’t</span><span style="font-size:14px;line-height:1.6">· diagnose anything, or score your “stress”<br>· show body numbers while you’re in the moment<br>· share anything unless you choose</span></div><div class="card" style="gap:14px"><div class="row"><span>haptic breathing</span>${tog("watch.haptics",S.watch.haptics)}</div><div class="row"><span>body signals<br><small style="color:var(--soft)">heart rate and HRV, shown afterwards</small></span>${tog("watch.body",S.watch.body)}</div><div class="row"><span>offer a breath when my body races<br><small style="color:var(--soft)">once per session, no numbers</small></span>${tog("watch.offer",S.watch.offer)}</div></div><div class="grow"></div><button class="btn ${S.watch.paired?"ghost":"dark"}" data-act="pair">${S.watch.paired?"unpair watch":"pair my watch&nbsp;›"}</button>`),
+body:()=>(setOrb("top"),`<button class="back" data-go="track">← track</button><h1 class="h">how it felt, and what<br>your body did</h1><div class="card"><span class="lab">last two weeks · 6 attempts</span>${bodyChart(320,true)}${legend(true)}</div><div class="card mint"><span style="font-size:16px">Your body settled within 4 minutes in 5 of 6 attempts, often faster than it felt.</span></div><p class="p" style="font-size:13px">Body signals are not a medical measurement. How it felt is what counts most.</p><div class="grow"></div><button class="btn ghost" data-act="hideBody">turn off body signals</button>`),
+me:()=>(setOrb("top"),`<button class="back" data-go="home">← home</button><h1 class="h l">me</h1><div class="card"><span class="lab">my strengths</span><div class="chips">${["good listener","curious","loyal"].map(s=>`<span class="chip" style="background:var(--mint);border:0">${s}</span>`).join("")}</div></div><button class="item" data-go="watch"><span class="t"><b>watch</b><small>${S.watch.paired?"paired · haptic breathing on":"not paired"}</small></span>›</button><button class="item" data-go="reminders"><span class="t"><b>reminders and quiet hours</b><small>gentle · quiet 10 pm – 8 am</small></span>›</button><button class="item" data-go="privacy"><span class="t"><b>privacy and data</b><small>consent log, download, delete</small></span>›</button><div class="item"><span class="t"><b>language</b><small>English</small></span>›</div><div class="item"><span class="t"><b>about KinSpace</b><small>a wellbeing service, not a medical device</small></span>›</div><div class="grow"></div>`),
 privacy:()=>(setOrb("none"),`<button class="back" data-go="me">← me</button><h1 class="h">your data,<br>your call.</h1><div class="card"><span class="lab">consent log</span>${(S.therapist.connected?[["14 Nov","connected "+S.therapist.name],["15 Nov","chose what to share"],["18 Nov","summary sent, reviewed"]]:[["today","account created, private"]]).map(([d,t])=>`<div style="display:flex;gap:12px"><b style="color:var(--teal);font-weight:500;font-size:13px">${d}</b><span style="font-size:14px">${t}</span></div>`).join("")}</div>${S.therapist.connected?`<button class="item" data-act="stopShare"><span class="t"><b>sharing with ${S.therapist.name}</b><small>tap to stop sharing</small></span><span style="color:var(--teal)">stop</span></button>`:""}<div class="item"><span class="t"><b>download my data</b><small>a copy of everything</small></span>›</div><button class="item urgent" data-act="askDelete"><span class="t"><b>delete everything</b><small>cannot be undone</small></span>›</button><div class="grow"></div><p class="p" style="font-size:13px;text-align:center">Private data never leaves your phone unless you share it.</p>`),
 reminders:()=>(setOrb("none"),`<button class="back" data-go="me">← me</button><h1 class="h">gentle,<br>never pushy.</h1><div class="card" style="gap:14px"><div class="row"><span>step reminders<br><small style="color:var(--soft)">once a day</small></span>${tog("reminders",S.reminders)}</div><div class="row"><span>strengths reminders<br><small style="color:var(--soft)">before a step</small></span>${tog("strengthRem",S.strengthRem)}</div><div class="row"><span>night replay nudge<br><small style="color:var(--soft)">9:30 pm</small></span>${tog("nudge",S.nudge)}</div><div class="row"><span>streaks<br><small style="color:var(--soft)">never</small></span><span class="toggle" aria-checked="false" style="opacity:.5"></span></div></div><div class="card mint"><span class="lab">quiet hours</span><span class="big">10 pm – 8 am</span><span style="font-size:13px;color:var(--soft)">Nothing buzzes, except pocket mode when you start it.</span></div><div class="grow"></div>`)
 };
@@ -223,8 +302,39 @@ del:()=>`<h2>delete everything?</h2><p style="color:var(--soft);opacity:1">Your 
 /* ---------- RENDER ---------- */
 function go(k){stopPocket(); closeSheet(); cur=k; render();}
 function render(){clearInterval(timer); screen.classList.toggle("dark",cur==="pocket"); view.className="view"+(cur==="pocket"?" pocket":""); view.innerHTML=SC[cur](); view.scrollTop=0; renderJump();
- if(cur==="home"&&S.today==="during"){const tick=()=>{const s=Math.floor((Date.now()-t0)/1000),el=document.getElementById("timer"); if(el) el.textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}; tick(); timer=setInterval(tick,1000);}
- if(cur==="pocket") startPocket();}
+ if(cur==="pocket") startPocket(); renderWatch(); startTimer();}
+function startTimer(){clearInterval(timer); if(S.today!=="during") return; const tick=()=>{const s=Math.floor((Date.now()-t0)/1000),t=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0"); for(const id of ["timer","wtimer"]){const el=document.getElementById(id); if(el) el.textContent=t;}}; tick(); timer=setInterval(tick,1000);}
+
+/* ---------- WATCH ---------- */
+let wBreath=false, offer=0; /* offer: 0 not yet, 1 showing, 2 used this session */
+const wscreen=document.getElementById("wscreen"), wcap=document.getElementById("wcap"), wsim=document.getElementById("wsim");
+const clock=()=>{const d=new Date(); return d.getHours()+":"+String(d.getMinutes()).padStart(2,"0");};
+const short=t=>{t=String(t).replace(/\.$/,""); return t.length>34?t.slice(0,32)+"…":t;};
+const WS={
+unpaired:()=>`<span class="wsm">kinspace</span><span class="wmid">not paired yet</span><button class="wbtn light" data-w="pairGo">set up on phone</button>`,
+face:()=>`<span class="wsm">kinspace</span><span class="wbig">${clock()}</span><span class="wsm">${S.onboarded?"nothing planned right now":"finish setup on your phone"}</span>`,
+reminder:()=>`<span class="wsm">today · 6 pm</span><span class="wmid">${esc(short(S.step))}</span><button class="wbtn teal" data-w="start">start</button><span class="wsm">${clock()}</span>`,
+session:()=>`<span class="wsm">in session</span><span class="wbig" id="wtimer">00:00</span><div class="wrow"><button class="wbtn" data-w="breathe">breathe</button><button class="wbtn" data-w="smaller">smaller</button></div><button class="wbtn light" data-w="done">done</button>`,
+offer:()=>`<div class="wglow"></div><span class="wmid">want a slow breath?</span><span class="wsm">your body seems busy. no numbers, just an offer.</span><div class="wrow"><button class="wbtn light" data-w="yesBreath">yes</button><button class="wbtn" data-w="notnow">not now</button></div>`,
+breathe:()=>`<div class="wglow breathe"></div><span class="wmid" style="margin-top:auto">breathe with<br>the taps</span><span class="wsm">${S.watch.haptics?"long tap in · short taps out":"follow the light"}</span><button class="wbtn" style="margin-top:auto" data-w="stopBreath">${cur==="pocket"?"I’m done":"stop"}</button>`,
+check:()=>`<span class="wsm">how tense now?</span><span class="wbig" id="wval">${S.after}</span><input type="range" id="wrange" min="0" max="100" value="${S.after}" aria-label="Tension now, on the watch"><button class="wbtn teal" data-w="save">save</button>`,
+after:()=>`<span class="wsm">saved</span><span class="wmid">tension<br>${S.before} → ${S.after}</span><span class="wsm">reflect on your phone tonight</span>`
+};
+const WCAP={unpaired:"The watch is optional. Pair it from me › watch on the phone.",face:"Quiet most of the time. No streaks, no scores.",reminder:"Today’s step, on your wrist. Start it here or on the phone.",session:"The timer runs on your wrist. Breathe, make it smaller, or finish without unlocking your phone.",offer:"Offered once per session, only if you turned it on. It never shows heart rate in the moment.",breathe:"Haptic breathing: a long tap in, short taps out. Screen can stay off.",check:"Rate it right away. It saves to today on your phone.",after:"Saved to today. The rest happens on the phone, when you’re ready."};
+function wState(){const w=S.watch; if(!w.paired) return "unpaired"; if(cur==="pocket"||wBreath) return "breathe"; if(offer===1) return "offer"; if(S.today==="during") return "session"; if(S.today==="after") return S.watchChecked?"after":"check"; if(cur==="home"&&S.onboarded) return "reminder"; return "face";}
+function renderWatch(){const k=wState(); wscreen.innerHTML=WS[k](); wscreen.dataset.state=k; wcap.textContent=WCAP[k]; wsim.hidden=!(k==="session"&&S.watch.offer&&offer===0); const el=document.getElementById("wtimer"); if(el&&t0){const s=Math.floor((Date.now()-t0)/1000); el.textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}}
+wscreen.addEventListener("click",e=>{const b=e.target.closest("[data-w]"); if(!b) return; const a=b.dataset.w;
+ if(a==="pairGo") return go("watch");
+ if(a==="start"){offer=0; return ACT.startSession();}
+ if(a==="smaller"){if(cur!=="home") go("home"); return openSheet("help");}
+ if(a==="breathe"||a==="yesBreath"){wBreath=true; if(offer===1) offer=2; if(S.watch.haptics) vib([900]); return renderWatch();}
+ if(a==="notnow"){offer=2; return renderWatch();}
+ if(a==="stopBreath"){wBreath=false; if(cur==="pocket") return ACT.pocketDone(); return renderWatch();}
+ if(a==="done"){wBreath=false; S.today="after"; S.watchChecked=false; save(); return go("home");}
+ if(a==="save"){S.after=+document.getElementById("wrange").value; S.watchChecked=true; save(); render(); toast("Saved from your watch.");}
+});
+wscreen.addEventListener("input",e=>{if(e.target.id==="wrange") document.getElementById("wval").textContent=e.target.value;});
+wsim.addEventListener("click",()=>{offer=1; if(S.watch.haptics) vib([200,120,200]); renderWatch();});
 function openSheet(k,arg){closeSheet(); const sc=document.createElement("div"); sc.className="scrim"; sc.onclick=closeSheet; const sh=document.createElement("div"); sh.className="sheet"+(k==="report"||k==="del"?" white":""); sh.setAttribute("role","dialog"); sh.setAttribute("aria-label",k); sh.innerHTML=`<div class="grab"></div>`+SHEETS[k](arg); screen.append(sc,sh); sheet=[sc,sh];}
 function closeSheet(){if(sheet){sheet.forEach(n=>n.remove()); sheet=null;}}
 function toast(m){clearTimeout(toastT); screen.querySelector(".toast")?.remove(); const t=document.createElement("div"); t.className="toast"; t.setAttribute("role","status"); t.textContent=m; screen.append(t); toastT=setTimeout(()=>t.remove(),2400);}
@@ -239,28 +349,30 @@ connect:()=>{S.therapist.connected=true; S.route="therapist"; save(); go(S.onboa
 saveGoal:()=>{const g=document.getElementById("goalF").value.trim(), s=document.getElementById("shortF").value.trim(); if(g) S.goal=g; if(s) S.shortGoal=s; save(); go("whofor");},
 finishOnb:()=>{S.onboarded=true; save(); go("home");},
 newLine:()=>{const L=["is your birthday soon? mine’s in may.","how do you know the host?","have you tried the coffee here?","what are you up to this weekend?"]; S.line=L[(L.indexOf(S.line)+1)%L.length]; save(); render();},
-startSession:()=>{S.today="during"; t0=Date.now(); save(); go("home");},
-endSession:()=>{S.today="after"; save(); go("home");},
-pocketDone:()=>{stopPocket(); S.today="after"; save(); go("home");},
+startSession:()=>{S.today="during"; t0=Date.now(); offer=0; wBreath=false; save(); go("home");},
+endSession:()=>{S.today="after"; S.watchChecked=false; wBreath=false; save(); go("home");},
+pocketDone:()=>{stopPocket(); wBreath=false; S.today="after"; S.watchChecked=false; save(); go("home");},
+pair:()=>{S.watch.paired=!S.watch.paired; save(); render(); toast(S.watch.paired?"Watch paired. It stays quiet until you need it.":"Watch unpaired.");},
+hideBody:()=>{S.watch.body=false; S.share.body=false; save(); go("track"); toast("Body signals off. Past readings removed.");},
 pocketSmaller:()=>{stopPocket(); S.today="during"; go("home"); openSheet("help");},
 addLadder:()=>{S.attempts++; const r=S.rungs.find(r=>r[1]==="next"); S.today="before"; save(); go("home"); toast("Added to your ladder.");},
 toHome:()=>{S.today="before"; save(); go("home");},
 r1:()=>{S.replay.fact=document.getElementById("fact").value; save(); go("replay2");},
 closeDay:()=>{S.replay.friend=document.getElementById("friend").value; save(); go("home"); toast("Day closed. Rest well.");},
 post:()=>{const v=document.getElementById("draft").value.trim(); if(!v){toast("Write a few words first.");return;} if(/kill|suicide|end it|don’t see the point|don't see the point|hurt myself/i.test(v)){S.draft=v; save(); go("urgent"); toast("Before posting, here is help that’s available now."); return;} S.posts.unshift([v,"now"]); S.draft=""; save(); go("posted");},
-send:()=>{save(); go("fromther"); toast("Summary sent. You can stop sharing any time.");},
+send:()=>{S.reviewed=false; save(); go("fromther"); toast("Summary sent. You can stop sharing any time.");},
 toHelp:()=>go("helphome"), toGoal:()=>go("goal"),
 call:()=>toast("In the real app this opens your phone dialer: 14416."),
 ground:()=>{closeSheet(); toast("Name 5 things you can see, slowly.");},
 mute:()=>{closeSheet(); toast("Muted similar posts.");}, report:()=>{closeSheet(); toast("Reported. Thank you.");},
-stopShare:()=>{S.share={steps:false,tension:false,patterns:false,journal:false}; save(); render(); toast("Sharing stopped. Nothing more will be sent.");},
+stopShare:()=>{S.share={steps:false,tension:false,patterns:false,journal:false,body:false}; save(); render(); toast("Sharing stopped. Nothing more will be sent.");},
 askDelete:()=>openSheet("del"), closeSheet:()=>closeSheet(),
 doDelete:()=>{S=JSON.parse(JSON.stringify(DEF)); save(); go("welcome"); toast("Everything deleted.");}
 };
 screen.addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; const d=b.dataset;
  if(d.go) return go(d.go); if(d.sheet) return openSheet(d.sheet); if(d.act&&ACT[d.act]) return ACT[d.act]();
  if(d.set){S[d.set]=d.val; save(); return render();}
- if(d.tog){const k=d.tog; if(k.startsWith("share.")){const s=k.split(".")[1]; S.share[s]=!S.share[s];} else if(k in S){S[k]=!S[k];} save(); b.setAttribute("aria-checked",b.getAttribute("aria-checked")!=="true"); return;}
+ if(d.tog){const k=d.tog; if(k.startsWith("share.")){const s=k.split(".")[1]; S.share[s]=!S.share[s];} else if(k.startsWith("watch.")){const s=k.split(".")[1]; S.watch[s]=!S.watch[s]; if(s==="body"&&!S.watch.body) S.share.body=false; renderWatch();} else if(k in S){S[k]=!S[k];} save(); b.setAttribute("aria-checked",b.getAttribute("aria-checked")!=="true"); return;}
  if(d.idea){S.goal=d.idea; save(); return render();}
  if(d.out){S.outcome=d.out; save(); return render();}
  if(d.hap){S.replay.happened=d.hap; save(); return render();}
@@ -283,11 +395,44 @@ const FLOWS=[["A · Onboarding",[["welcome","Welcome"],["promise","Our promise"]
  ["C · Evening and progress",[["replay1","Night replay"],["track","Track"],["patterns","Patterns"],["ladder","Goal ladder"]]],
  ["D · Community",[["community","Community"],["write","Write a message"],["posted","Posted"]]],
  ["E · Help",[["helphome","Help"],["connected","Therapist connected"],["share","Choose what to share"],["preview","Share preview"],["fromther","From your therapist"],["findhelp","Find help"],["urgent","Urgent help"]]],
- ["F · Me",[["me","Me"],["privacy","Privacy and data"],["reminders","Reminders"]]]];
+ ["F · Me",[["me","Me"],["privacy","Privacy and data"],["reminders","Reminders"]]],
+ ["G · Watch",[["watch","Watch setup"],["body","Body signals"]]]];
 function renderJump(){const j=document.getElementById("jump"); const open=[...j.querySelectorAll("details")].map(d=>d.open); j.innerHTML=FLOWS.map(([t,items],i)=>`<details ${open[i]??(i<2)?"open":""}><summary>${t}</summary>${items.map(([k,l])=>`<button data-jump="${k}" ${cur===k?'style="color:var(--ink);font-weight:500"':""}>${l}</button>`).join("")}</details>`).join("");}
 document.getElementById("jump").addEventListener("click",e=>{const b=e.target.closest("[data-jump]"); if(!b) return; const k=b.dataset.jump;
  if(k==="home"&&S.today==="during") t0=Date.now(); if(["home","community","helphome","me"].includes(k)) S.onboarded=true; go(k);});
-document.getElementById("reset").addEventListener("click",()=>{S=JSON.parse(JSON.stringify(DEF)); save(); go("welcome");});
+document.getElementById("reset").addEventListener("click",()=>{S=JSON.parse(JSON.stringify(DEF)); wBreath=false; offer=0; save(); go("welcome");});
+
+/* ---------- PSYCHOLOGIST VIEW ---------- */
+const portal=document.getElementById("portal"), stageClient=document.getElementById("stageClient");
+const NEXT="say one line on the family call";
+function renderPortal(){const sh=S.share, body=sh.body&&S.watch.body, any=sh.steps||sh.tension||sh.patterns||sh.journal||body;
+ const side=`<aside class="pside"><span class="lab">clients</span><button class="pclient on"><span class="pav">A</span><span>Aarav S.<small>${S.therapist.connected?(any?"summary ready":"connected · nothing shared"):"invited · code KS4291"}</small></span></button><div class="pclient"><span class="pav">M</span><span>Meera K.<small>session Thursday</small></span></div><div class="pclient"><span class="pav">R</span><span>Rohan D.<small>not sharing</small></span></div><p style="font-size:12px;color:var(--soft);line-height:1.5;margin-top:auto">You see only what each client chose to share, once a week. Never live, never their location.</p></aside>`;
+ const bar=`<div class="pbar"><b>KinSpace · for therapists</b><span>${S.therapist.name} · weekly summaries</span></div>`;
+ let main;
+ if(!S.therapist.connected) main=`<div class="pempty"><h2>Aarav hasn’t connected yet</h2><p>They enter your code, KS4291, in the app under help. Until then you see nothing.</p><button class="pbtn" data-p="connect">connect as Aarav (demo)</button></div>`;
+ else if(!any) main=`<div class="pempty"><h2>Aarav is sharing nothing this week</h2><p>That’s their choice, and it can change any time. Talk in session as usual.</p></div>`;
+ else {const lock=(k,t)=>`<div class="pp locked"><span class="k">${k}</span><span class="d">${t}</span></div>`;
+  const chipsH=[["steps","steps"],["tension","felt tension"],["patterns","patterns"],["journal","journal"],["body","body signals"]].map(([k,l])=>{const on=k==="body"?body:sh[k]; return `<span class="pchip ${on?"ok":""}">${on?"✓ ":""}${l}${on?"":" · not shared"}</span>`;}).join("");
+  const kpis=(sh.steps?`<div class="pp"><span class="k">steps tried</span><span class="v">6</span><span class="d">3 did it · 2 partial · 1 not today</span></div>`:lock("steps tried","not shared"))
+   +(sh.tension?`<div class="pp"><span class="k">felt tension</span><span class="v">72 → 41</span><span class="d">average, before → after</span></div>`:lock("felt tension","not shared"))
+   +(body?`<div class="pp"><span class="k">body settled</span><span class="v">~4 min</span><span class="d">in 5 of 6 attempts</span></div>`:lock("body signals",S.watch.body?"not shared":"no watch, or turned off"))
+   +(sh.steps?`<div class="pp"><span class="k">ladder</span><span class="v">${doneN()} of 5</span><span class="d">next: ${esc(S.rungs.find(r=>r[1]==="next")?.[0]||"—")}</span></div>`:lock("ladder","not shared"));
+  const chartP=sh.tension?`<div class="pp"><h3>felt tension before and after${body?", with body recovery":""}</h3><div class="chartwrap">${bodyChart(660,body)}</div>${legend(body)}${body?`<span class="d">Body signals come from the client’s watch, summarised after each attempt. Not a diagnostic measure.</span>`:""}</div>`:lock("felt tension chart","not shared");
+  const attP=sh.steps?`<div class="pp"><h3>attempts this week</h3><div class="plist">${ATT.map(([d,l,,,,o])=>`<div><b>${d}</b><span>${l}</span><i style="color:${o==="not today"?"var(--rust)":"var(--teal)"}">${o}</i></div>`).join("")}</div></div>`:"";
+  const patP=sh.patterns?`<div class="pp"><h3>pattern the client kept</h3><span style="font-size:15px">Evening family events feel hardest.</span><span class="d">4 of 6 hardest ratings were evening family events.</span></div>`:lock("patterns","not shared");
+  const agP=`<div class="pp"><h3>agreed steps</h3><div class="plist">${S.agreed.map(a=>`<div><span>${esc(a)}</span><i style="color:var(--teal)">✓</i></div>`).join("")}</div>${S.agreed.includes(NEXT)?"":`<button class="pbtn" style="align-self:flex-start;background:var(--teal)" data-p="add">+ agree: ${NEXT}</button>`}</div>`;
+  const noteP=`<div class="pp"><h3>note to Aarav</h3><textarea id="pnote" rows="3" style="font:inherit;font-size:14px;border:0;border-radius:12px;background:#f6f1ea;padding:10px;resize:vertical;color:var(--ink)">${esc(S.note)}</textarea><span class="d">Shows in “from my therapist” in their app.</span></div>`;
+  const safeP=`<div class="pp" style="background:var(--peach)"><h3 style="color:var(--rust)">not a crisis channel</h3><span class="d" style="color:var(--ink)">Nothing here is live. Clients see Tele-MANAS 14416 and 112 directly in the app.</span></div>`;
+  main=`<div class="pmain"><div class="ptop"><div><h2>Aarav S.</h2><p>week of 15–21 · session tomorrow, 5 pm · goal: ${esc(S.goal)}</p></div><button class="pbtn ${S.reviewed?"done":""}" data-p="review">${S.reviewed?"✓ reviewed":"mark as reviewed"}</button></div><div class="pchips">${chipsH}</div><div class="pkpis">${kpis}</div><div class="prow"><div class="pcol">${chartP}${attP}</div><div class="pcol">${patP}${agP}${noteP}${safeP}</div></div></div>`;}
+ portal.innerHTML=bar+`<div class="pgrid">${side}${main}</div>`;}
+portal.addEventListener("click",e=>{const b=e.target.closest("[data-p]"); if(!b) return; const a=b.dataset.p;
+ if(a==="connect"){S.therapist.connected=true; S.route="therapist";}
+ if(a==="add"&&!S.agreed.includes(NEXT)) S.agreed.unshift(NEXT);
+ if(a==="review") S.reviewed=!S.reviewed;
+ save(); renderPortal();});
+portal.addEventListener("input",e=>{if(e.target.id==="pnote"){S.note=e.target.value; save();}});
+document.querySelector(".viewtabs").addEventListener("click",e=>{const b=e.target.closest("[data-view]"); if(!b) return; const p=b.dataset.view==="portal";
+ document.querySelectorAll(".viewtabs button").forEach(x=>x.setAttribute("aria-pressed",x===b)); portal.hidden=!p; stageClient.hidden=p; if(p){stopPocket(); renderPortal();} else render();});
 screen.addEventListener("keydown",e=>{if(e.key==="Escape") closeSheet();});
 cur=S.onboarded?"home":"welcome"; if(S.today==="during") t0=Date.now(); render();
 })();
