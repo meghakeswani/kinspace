@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="KinSpace: a working prototype of a care-continuity app for young adults who feel anxious in social situations.">
+<title>KinSpace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: one phone running the whole app, with a "jump to" panel beside it for reviewers. Single light look: teal breathing orb on warm peach. */
+:root{
+  --cream:#fcefe4; --paper:#fffaf5; --ink:#10264a; --soft:#4d5d78; --teal:#2f8a86; --deep:#1e6460;
+  --mint:#dcefe8; --peach:#f7dfcc; --rust:#c06a43; --white:#ffffff; --line:rgba(16,38,74,.14);
+  --font:"Inter Tight","SF Pro Display",-apple-system,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#efe6db;color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.4;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0;text-align:left}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+.stage{display:flex;gap:40px;justify-content:center;align-items:flex-start;padding-block:28px 40px;max-width:1100px;margin:0 auto}
+.phone{flex:none;width:390px;max-width:100%;height:844px;border-radius:56px;padding:11px;background:#0d0f14;box-shadow:0 30px 70px rgba(16,38,74,.22)}
+.screen{position:relative;height:100%;border-radius:46px;overflow:hidden;background:var(--cream);isolation:isolate}
+.screen.dark{background:#0f1514}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:118px;height:34px;border-radius:20px;background:#0d0f14;z-index:60}
+.orb{position:absolute;left:50%;border-radius:50%;z-index:-1;pointer-events:none;transition:transform 1s ease,top 1s ease;
+  background:radial-gradient(ellipse 50% 50% at 50% 50%,#3f9a95 0%,#4fa8a2 14%,#6db9b1 28%,#8fcdc3 42%,#b8dfd2 56%,#e2ece0 70%,rgba(252,239,228,0) 84%)}
+.orb.breathe{animation:breathe 10s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:translateX(-50%) scale(.92)}40%{transform:translateX(-50%) scale(1.08)}}
+.view{position:absolute;inset:0;display:flex;flex-direction:column;gap:14px;padding:58px 22px 18px;overflow-y:auto;scrollbar-width:none}
+.view::-webkit-scrollbar{display:none}
+.grow{flex:1 0 8px}
+.back{font-size:13px;color:var(--soft);align-self:flex-start}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);font-weight:500}
+.h{font-weight:300;font-size:31px;line-height:1.08;letter-spacing:-.03em;margin:0;text-wrap:balance}
+.h.xl{font-size:44px}.h.l{font-size:36px}
+.p{margin:0;color:var(--soft);font-size:15px;line-height:1.45}
+.wm{font-weight:500;font-size:15px}.wm span{font-weight:300}
+.card{border-radius:24px;padding:18px;background:rgba(255,255,255,.7);display:flex;flex-direction:column;gap:8px}
+.card.dark{background:var(--ink);color:var(--white)}
+.card.mint{background:var(--mint)}.card.peach{background:var(--peach)}
+.card.glass{background:rgba(30,100,96,.16);border:1px solid rgba(255,255,255,.5);color:var(--white);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.card.dash{border:1.5px dashed rgba(16,38,74,.35);background:rgba(255,255,255,.7)}
+.lab{font-size:12px;letter-spacing:.06em;color:var(--soft)}
+.card.dark .lab{color:#f0c4a3}.card.mint .lab{color:var(--teal)}
+.big{font-weight:300;font-size:22px;letter-spacing:-.02em;line-height:1.2}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border-radius:999px;padding:14px 22px;font-size:17px;background:var(--white);box-shadow:0 6px 18px rgba(16,38,74,.12)}
+.btn.dark{background:var(--ink);color:var(--white);box-shadow:none}
+.btn.ghost{background:none;box-shadow:none;border:1px solid var(--line);font-size:15px}
+.btn.rust{background:var(--rust);color:var(--white);box-shadow:none}
+.btn.onglass{background:rgba(255,255,255,.18);color:var(--white);border:1px solid rgba(255,255,255,.5);box-shadow:none;font-size:15px;width:auto;padding:10px 16px}
+.btn.ondark{background:none;color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.3);box-shadow:none;font-size:15px;width:auto;padding:10px 16px}
+.link{font-size:14px;color:var(--soft);text-align:center;align-self:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border-radius:999px;padding:9px 14px;font-size:14px;border:1px solid var(--line)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.glasschip{border-color:rgba(255,255,255,.5);color:var(--white)}
+.glasschip[aria-pressed="true"]{background:var(--white);color:var(--ink)}
+.opt{border-radius:22px;padding:16px 18px;background:rgba(255,255,255,.7);display:flex;flex-direction:column;gap:3px;width:100%;border:1px solid transparent}
+.opt b{font-weight:500;font-size:18px}.opt span{font-size:14px;color:var(--soft)}
+.opt[aria-pressed="true"]{background:var(--ink);color:var(--white)}.opt[aria-pressed="true"] span{color:rgba(255,255,255,.8)}
+.dots{display:flex;gap:6px}.dots i{height:8px;width:8px;border-radius:4px;background:var(--ink);opacity:.2}.dots i.on{opacity:1}.dots i.cur{width:22px;opacity:1}
+.steps{display:flex;gap:6px}.steps i{flex:1;height:4px;border-radius:2px;background:var(--ink);opacity:.15}.steps i.on{opacity:.9}
+.code{display:flex;gap:8px}.code input{width:46px;height:58px;border-radius:14px;border:0;background:var(--white);text-align:center;font-size:24px;font-weight:300;text-transform:uppercase}
+.field{width:100%;border:0;border-radius:18px;background:var(--white);padding:14px;font-size:17px;resize:none;letter-spacing:-.01em}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.item{display:flex;align-items:center;gap:10px;width:100%;padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.7)}
+.item .t{flex:1;min-width:0}.item b{display:block;font-weight:500;font-size:16px}.item small{display:block;font-size:13px;color:var(--soft)}
+.item.urgent{background:var(--peach)}.item.urgent b{color:var(--rust)}
+.toggle{flex:none;width:48px;height:28px;border-radius:14px;background:#d9e3df;position:relative}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .2s}
+.toggle[aria-checked="true"]{background:var(--teal)}.toggle[aria-checked="true"]::after{left:23px}
+input[type=range]{width:100%;accent-color:var(--teal)}
+.glass input[type=range]{accent-color:#fff}
+/* home */
+.top{display:flex;justify-content:space-between;align-items:center}
+.me{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.75);display:grid;place-items:center;font-size:13px;font-weight:500}
+.week{display:grid;grid-template-columns:repeat(7,1fr);text-align:center}
+.day{display:flex;flex-direction:column;align-items:center;gap:4px}
+.day small{font-size:11px;color:var(--soft)}
+.day b{font-weight:400;font-size:17px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%}
+.day.today b{background:var(--white);font-weight:500;box-shadow:0 4px 14px rgba(47,138,134,.2)}
+.dot{width:6px;height:6px;border-radius:50%}.dot.full{background:var(--teal)}.dot.half{background:linear-gradient(90deg,var(--teal) 50%,rgba(47,138,134,.2) 50%)}
+.step{font-weight:300;font-size:28px;line-height:1.08;letter-spacing:-.025em;margin:0}
+.goal{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:22px;background:rgba(255,255,255,.55);width:100%}
+.goal .g{flex:1;min-width:0}.goal b{display:block;font-weight:500}.goal small{font-size:12px;color:var(--soft)}
+.bar{height:4px;border-radius:2px;background:rgba(16,38,74,.12);margin-top:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal)}
+.for{font-size:12px;padding:5px 10px;border-radius:999px;background:var(--white);white-space:nowrap}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{background:rgba(255,255,255,.62);border-radius:22px;padding:14px 12px;display:flex;flex-direction:column;gap:16px}
+.tile svg{width:28px;height:28px}
+.nav{align-self:center;display:flex;gap:4px;padding:6px;border-radius:999px;background:rgba(255,255,255,.85);box-shadow:0 8px 24px rgba(16,38,74,.1)}
+.nav button{padding:10px 16px;border-radius:999px;font-size:14px;color:var(--soft)}
+.nav button[aria-current="page"]{background:var(--ink);color:var(--white)}
+/* sheets */
+.scrim{position:absolute;inset:0;background:rgba(16,38,74,.28);z-index:40}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:41;border-radius:32px 32px 46px 46px;padding:22px 22px 30px;color:#fff;max-height:86%;overflow:auto;
+  background:linear-gradient(180deg,#2a7a76,#3f9a95 45%,#6db9b1 85%,#8fcdc3)}
+.sheet.white{background:var(--white);color:var(--ink)}
+.grab{width:40px;height:4px;border-radius:2px;background:rgba(255,255,255,.6);margin:0 auto 14px}.sheet.white .grab{background:rgba(16,38,74,.2)}
+.sheet h2{font-weight:300;font-size:26px;letter-spacing:-.02em;margin:0 0 4px}
+.sheet p{margin:0 0 12px;font-size:14px;opacity:.9}
+.biglist button{display:block;width:100%;font-weight:300;font-size:32px;letter-spacing:-.03em;line-height:1.15;color:rgba(255,255,255,.62);padding:2px 0}
+.biglist button:hover,.biglist button[aria-pressed="true"]{color:#fff}
+.biglist small{display:block;font-size:13px;letter-spacing:0;color:#fff;opacity:.9;margin:0 0 8px}
+.sopt{display:block;width:100%;padding:12px 14px;border-radius:16px;background:#f4f6f5;margin-bottom:8px}.sopt b{display:block;font-weight:500}.sopt small{color:var(--soft)}.sopt.warn{background:var(--peach)}.sopt.warn b{color:var(--rust)}
+/* pocket */
+.pocket{align-items:center;text-align:center;color:#fff}
+.pulse{position:absolute;left:50%;top:330px;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;background:radial-gradient(circle,rgba(63,154,149,.55),rgba(63,154,149,.15) 55%,rgba(63,154,149,0) 70%);z-index:-1;transition:transform 4s ease-in-out}
+.toast{position:absolute;left:22px;right:22px;bottom:96px;z-index:70;background:var(--ink);color:#fff;padding:12px 16px;border-radius:16px;font-size:14px}
+/* side panel */
+.side{width:280px;flex:none;position:sticky;top:24px;display:flex;flex-direction:column;gap:14px}
+.side h1{font-weight:300;font-size:30px;letter-spacing:-.03em;margin:0}
+.side p{margin:0;color:var(--soft);font-size:14px}
+.jump{display:flex;flex-direction:column;gap:10px}
+.jump details{background:var(--paper);border-radius:16px;padding:10px 14px}
+.jump summary{cursor:pointer;font-weight:500}
+.jump button{display:block;font-size:14px;color:var(--soft);padding:4px 0}
+.jump button:hover{color:var(--ink)}
+.reset{font-size:13px;color:var(--rust);align-self:flex-start}
+@media (max-width:760px){.stage{flex-direction:column;align-items:center}.side{position:static;width:100%;max-width:390px}}
+@media (max-width:430px){.phone{height:min(844px,calc(100vh - 32px));min-height:680px;border-radius:44px;padding:8px}.screen{border-radius:38px}}
+@media (prefers-reduced-motion:reduce){.orb.breathe{animation:none}.pulse,.toggle::after,.orb{transition:none}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="phone"><div class="screen" id="screen"><div class="island"></div><div class="orb" id="orb"></div><div class="view" id="view"></div></div></div>
+  <aside class="side" aria-label="Prototype guide">
+    <h1>KinSpace</h1>
+    <p>A working prototype of the full app: onboarding, a practice session, evening reflection, community, help and settings. Tap through it, or jump to a screen. Your choices are kept in this browser only.</p>
+    <div class="jump" id="jump"></div>
+    <button class="reset" id="reset">Start again from onboarding</button>
+    <p style="font-size:12px">A design prototype, not a medical service. Sample data and names are fictional. In an emergency in India, call Tele-MANAS 14416 or 112.</p>
+  </aside>
+</div>
+
+<script>
+(() => {
+const KEY="kinspace.proto.v2";
+const DEF={onboarded:false,route:"alone",goal:"give a short toast at my brother’s sangeet",shortGoal:"stay 30 minutes at saturday’s dinner",forWhom:"my brother",size:"medium",reminders:true,
+ today:"before",step:"talk to one stranger and learn their birthday.",line:"is your birthday soon? mine’s in may.",before:70,after:40,outcome:"part",
+ reflect:{thoughts:"I thought they’d find it weird.",feelings:"heart racing, then calmer",behaviours:"I stayed, and asked one question"},
+ rungs:[["say hi to a neighbour","done"],["talk to one stranger, learn their birthday","done"],["stay 30 min at a cousin’s dinner","part"],["say one line on a family call","next"],["give the toast at the sangeet","goal"]],
+ attempts:3,therapist:{connected:false,name:"Dr. A. Rao"},share:{steps:true,tension:true,patterns:true,journal:false},
+ posts:[["Left the dinner early again. Still went though.","2 h"],["Said hi to my neighbour. Took me three weeks.","yesterday"]],draft:"",
+ replay:{fact:"I went to the café at 6. I asked the barista one question. I stayed 25 minutes.",fear:"they’ll think I’m weird.",happened:"no",friend:""},
+ quiet:true,nudge:true,strengthRem:true};
+let S; try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){} if(!S) S=JSON.parse(JSON.stringify(DEF));
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const view=document.getElementById("view"), screen=document.getElementById("screen"), orb=document.getElementById("orb");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let cur="welcome", sheet=null, timer=null, t0=0, pocketT=null, toastT=null;
+const ORB={top:{w:520,h:520,y:-40},mid:{w:720,h:1000,y:360},low:{w:700,h:800,y:700},home:{w:720,h:1000,y:360},none:null};
+function setOrb(k,breathe){const o=ORB[k]; if(!o){orb.style.display="none";return;} orb.style.display=""; orb.style.width=o.w+"px"; orb.style.height=o.h+"px"; orb.style.marginLeft=(-o.w/2)+"px"; orb.style.left="50%"; orb.style.top=(o.y-o.h/2)+"px"; orb.style.transform=""; orb.classList.toggle("breathe",!!breathe);}
+const dots=(n,i)=>`<div class="dots">${Array.from({length:n},(_,k)=>`<i class="${k<i?"on":k===i?"cur":""}"></i>`).join("")}</div>`;
+const steps=(n,i)=>`<div class="steps">${Array.from({length:n},(_,k)=>`<i class="${k<=i?"on":""}"></i>`).join("")}</div>`;
+const tog=(k,on)=>`<button class="toggle" role="switch" aria-checked="${on}" data-tog="${k}" aria-label="${k}"></button>`;
+const chips=(arr,key,glass)=>`<div class="chips">${arr.map(v=>`<button class="chip ${glass?"glasschip":""}" aria-pressed="${S[key]===v}" data-set="${key}" data-val="${esc(v)}">${esc(v)}</button>`).join("")}</div>`;
+const navBar=a=>`<div class="grow"></div><nav class="nav" aria-label="Main">${["home","community","help"].map(k=>`<button data-go="${k==="home"?"home":k==="community"?"community":"helphome"}" ${a===k?'aria-current="page"':""}>${k}</button>`).join("")}</nav>`;
+const icons={relieve:'<svg viewBox="0 0 28 28" fill="none" stroke="#10264a" stroke-width="1.4" stroke-linecap="round"><circle cx="14" cy="14" r="12"/><path d="M8.5 12.5q1.5-1.5 3 0M16.5 12.5q1.5-1.5 3 0M10 18q4 3 8 0"/></svg>',reflect:'<svg viewBox="0 0 28 28" fill="none" stroke="#10264a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 4l6 6L11 23H5v-6z"/><path d="M15 7l6 6M3 26h22"/></svg>',track:'<svg viewBox="0 0 28 28" fill="none" stroke="#10264a" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h20M4 14h14M4 21h9"/><circle cx="22" cy="21" r="2.5"/></svg>'};
+const hello=()=>{const h=new Date().getHours(); return h<12?"good morning":h<18?"good afternoon":"good evening";};
+const doneN=()=>S.rungs.filter(r=>r[1]==="done"||r[1]==="part").length;
+
+/* ---------- SCREENS ---------- */
+const SC={
+welcome:()=>(setOrb("mid"),`<div class="wm">kin<span>space</span></div><div class="grow"></div><h1 class="h xl">small steps,<br>at your pace.</h1><p class="p" style="color:var(--ink)">Practise everyday social moments, find relief when it gets hard, and look back without judgement.</p><div class="grow"></div><button class="btn" data-go="promise">get started&nbsp;›</button><button class="link" data-act="skipOnb">I already have an account</button>`),
+promise:()=>(setOrb("top"),`${dots(5,0)}<h1 class="h">before we start,<br>three promises.</h1>${[["no labels","We talk about situations and goals. Never diagnoses."],["private by default","Nothing leaves your phone unless you choose to share it."],["not an emergency service","Urgent help is always two taps away: Tele-MANAS 14416."]].map(([t,d])=>`<div class="card"><b style="font-weight:500;font-size:17px">${t}</b><span class="p" style="font-size:14px">${d}</span></div>`).join("")}<div class="grow"></div><button class="btn dark" data-go="route">sounds good&nbsp;›</button>`),
+route:()=>(setOrb("none"),`<button class="back" data-go="promise">← back</button>${dots(5,1)}<h1 class="h">how would you like<br>to start?</h1><button class="opt" aria-pressed="${S.route==="alone"}" data-set="route" data-val="alone"><b>on my own</b><span>Start with a goal. You can add a therapist later.</span></button><button class="opt" aria-pressed="${S.route==="therapist"}" data-set="route" data-val="therapist"><b>with my therapist</b><span>Enter the code they gave you in a session.</span></button><p class="p">Either way, you decide what is shared.</p><div class="grow"></div><button class="btn dark" data-go="${S.route==="therapist"?"code":"goal"}">continue&nbsp;›</button>`),
+code:()=>(setOrb("none"),`<button class="back" data-go="route">← back</button>${dots(5,1)}<h1 class="h">enter your code</h1><p class="p">Your therapist gives you this in a session. Try KS4291.</p><div class="code">${[..."KS4291"].map((c,i)=>`<input maxlength="1" aria-label="code character ${i+1}" value="${c}" data-code="${i}">`).join("")}</div><div class="card mint"><span class="lab">what they can see</span><span style="font-size:15px">Nothing yet. You choose what to share, preview it first, and can stop any time.</span></div><div class="grow"></div><button class="btn dark" data-act="connect">connect&nbsp;›</button><button class="link" data-go="goal">I don’t have a code</button>`),
+goal:()=>(setOrb("none"),`<button class="back" data-go="route">← back</button>${dots(5,2)}<h1 class="h">what would you like<br>to be part of?</h1><div class="card"><span class="lab">my goal</span><textarea class="field" id="goalF" rows="2" style="padding:0;background:none;font-weight:300;font-size:20px">${esc(S.goal)}</textarea></div><span class="lab">ideas</span><div class="chips">${["a family event","speaking in class","a work lunch","meeting new people","a phone call"].map(c=>`<button class="chip" data-idea="${c}">${c}</button>`).join("")}</div><div class="card mint"><span class="lab">first, a short-term goal</span><input class="field" id="shortF" style="padding:0;background:none" value="${esc(S.shortGoal)}"></div><div class="grow"></div><button class="btn dark" data-act="saveGoal">continue&nbsp;›</button>`),
+whofor:()=>(setOrb("low"),`<button class="back" data-go="goal">← back</button>${dots(5,3)}<h1 class="h">who is it for?</h1><p class="p">A reason makes small steps easier. Only you see this.</p>${chips(["mom","my brother","my partner","a friend","my daughter","volunteering","myself"],"forWhom")}<div class="card"><span class="big">♡ for ${esc(S.forWhom)}</span><span class="p" style="font-size:14px">This shows on your goal, as a reminder of why.</span></div><div class="grow"></div><button class="btn" data-go="firststep">continue&nbsp;›</button>`),
+firststep:()=>(setOrb("none"),`<button class="back" data-go="whofor">← back</button>${dots(5,4)}<h1 class="h">start smaller<br>than you think.</h1>${[["full","talk to two people and stay an hour"],["medium","say hi to one person, stay 30 minutes"],["small","go, stay 10 minutes, no talking needed"]].map(([k,d])=>`<button class="opt" aria-pressed="${S.size===k}" data-set="size" data-val="${k}"><b>${k}</b><span>${d}</span></button>`).join("")}<div class="card"><div class="row"><span>gentle reminders</span>${tog("reminders",S.reminders)}</div><div class="row"><span>quiet hours</span><span style="color:var(--teal);font-weight:500">10 pm – 8 am</span></div></div><div class="grow"></div><button class="btn dark" data-act="finishOnb">go to home&nbsp;›</button>`),
+home:()=>{setOrb("home",S.today==="during"); const wk=[["sun","15","full"],["mon","16",""],["tue","17","full"],["wed","18","half"],["thu","19",S.today==="after"&&S.outcome!=="not"?(S.outcome==="did"?"full":"half"):""],["fri","20",""],["sat","21",""]];
+ return `<div class="top"><div class="wm">kin<span>space</span></div><button class="me" data-go="me" aria-label="Me">me</button></div><h1 class="h l" style="font-size:34px">${hello()}</h1>
+ <div class="week">${wk.map(([d,n,dot],i)=>`<div class="day ${i===4?"today":""}"><small>${d}</small><b>${n}</b><span class="dot ${dot}"></span></div>`).join("")}</div>
+ <section class="card glass" style="min-height:250px">${homeCard()}</section>
+ <button class="goal" data-go="ladder"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#10264a" stroke-width="1.4"><circle cx="14" cy="16" r="11"/><circle cx="14" cy="16" r="6.5"/><circle cx="14" cy="16" r="2" fill="#10264a"/><path d="M14 16 L26 4 M22 4h4v4"/></svg><span class="g"><b>${esc(S.goal.length>34?S.goal.slice(0,32)+"…":S.goal)}</b><small>${doneN()} of 5 steps toward it</small><div class="bar"><i style="width:${doneN()*20}%"></i></div></span><span class="for">♡ ${esc(S.forWhom)}</span></button>
+ <div class="tiles"><button class="tile" data-sheet="relieve">${icons.relieve}<span>relieve</span></button><button class="tile" data-go="replay1">${icons.reflect}<span>reflect</span></button><button class="tile" data-go="track">${icons.track}<span>track</span></button></div>${navBar("home")}`;},
+choices:()=>(setOrb("top"),`<button class="back" data-go="home">← today</button><span class="eyebrow">today’s step</span><h1 class="h" style="font-size:28px">${esc(S.step)}</h1>${chips(["full","medium","small"],"size")}<div class="card"><span class="lab">one line to try</span><span class="big" style="font-size:18px">“${esc(S.line)}”</span><button style="font-size:13px;color:var(--teal)" data-act="newLine">another line ↻</button></div><div class="card"><span class="lab">where and when</span><span style="font-size:17px">café near work · 6 pm</span></div><div class="card mint"><div class="row"><span>how tense do you feel right now?</span><b id="bv" style="color:var(--teal);font-weight:500">${S.before}</b></div><input type="range" id="before" min="0" max="100" value="${S.before}" aria-label="Tension before, 0 to 100"><span class="p" style="font-size:13px">You’ll rate it again afterwards.</span></div><div class="grow"></div><button class="btn dark" data-act="startSession">start session&nbsp;›</button>`),
+pocket:()=>{setOrb("none"); return `<div class="pulse" id="pulse"></div><span style="font-size:14px;opacity:.6;align-self:flex-start">pocket mode</span><div class="grow"></div><h1 class="h" id="breath" style="color:#fff;text-align:center;width:100%">breathe in · 4</h1><p class="p" style="color:rgba(255,255,255,.6);text-align:center">Put your phone away. A long buzz means in, short taps mean out.</p><p class="p" id="hapnote" style="color:rgba(255,255,255,.45);font-size:12px;text-align:center"></p><div class="grow"></div><div style="display:flex;gap:10px;justify-content:center"><button class="btn ondark" data-act="pocketSmaller">make it smaller</button><button class="btn ondark" data-act="pocketDone">I’m done</button></div><span style="font-size:12px;opacity:.4;align-self:center">tap twice to wake the screen</span>`;},
+reflect:()=>(setOrb("none"),`<button class="back" data-go="home">← back</button><h1 class="h">a few words,<br>only for you.</h1>${["thoughts","feelings","behaviours"].map(k=>`<div class="card"><span class="lab" style="color:var(--rust)">${k}</span><textarea class="field" rows="2" data-ref="${k}" style="padding:0;background:none">${esc(S.reflect[k])}</textarea></div>`).join("")}<span class="p" style="font-size:13px">🔒 only you can see this</span><div class="grow"></div><button class="btn dark" data-go="feedback">save&nbsp;›</button>`),
+feedback:()=>(setOrb("mid"),`<span class="p" style="font-size:13px">saved</span><div class="grow"></div><div class="card glass" style="gap:12px;padding:24px 18px"><span class="h" style="color:#fff">${S.outcome==="did"?"you did it.":S.outcome==="part"?"part of it counts.":"that counts too."}</span><span style="font-size:17px">tension ${S.before} → ${S.after}</span><span style="font-size:15px;opacity:.9">${S.outcome==="not"?"Waiting is information, not failure. Next time starts smaller.":"You stayed and tried. That’s practice."}</span></div><div class="card"><span class="lab">next time, try</span><span class="big" style="font-size:18px">${S.outcome==="not"?"go, stay 10 minutes, no talking needed":"ask one follow-up question"}</span></div><div class="grow"></div><button class="btn" data-act="addLadder">add to my ladder&nbsp;›</button><button class="btn ghost" data-act="toHome">maybe later</button>`),
+replay1:()=>(setOrb("low"),`<button class="back" data-go="home">not tonight</button>${steps(3,0)}<span class="eyebrow">night replay · 1 of 3</span><h1 class="h l">what happened?</h1><p class="p">Just the facts, like a weather report.</p><div class="card"><textarea class="field" rows="4" id="fact" style="padding:0;background:none;font-size:18px">${esc(S.replay.fact)}</textarea></div><div class="grow"></div><button class="btn" data-act="r1">next&nbsp;›</button>`),
+replay2:()=>(setOrb("low"),`<button class="back" data-go="replay1">← back</button>${steps(3,1)}<span class="eyebrow">night replay · 2 of 3</span><h1 class="h l">what did you<br>predict?</h1><div class="card"><span class="lab">I feared</span><span class="big" style="font-size:18px">“${esc(S.replay.fear)}”</span></div><span>did it happen?</span><div class="chips">${["no","a bit","yes"].map(v=>`<button class="chip" aria-pressed="${S.replay.happened===v}" data-hap="${v}">${v}</button>`).join("")}</div><div class="card mint"><div class="row"><span>tension before</span><b style="color:var(--teal)">${S.before}</b></div><div class="row"><span>tension after</span><b style="color:var(--teal)">${S.after}</b></div></div><div class="grow"></div><button class="btn" data-go="replay3">next&nbsp;›</button>`),
+replay3:()=>(setOrb("low"),`<button class="back" data-go="replay2">← back</button>${steps(3,2)}<span class="eyebrow">night replay · 3 of 3</span><h1 class="h l">what would you<br>tell a friend?</h1><div class="card"><textarea class="field" rows="3" id="friend" style="padding:0;background:none;font-size:18px" placeholder="you showed up. that was the hard part.">${esc(S.replay.friend)}</textarea></div><div class="chips">${["you showed up","nobody noticed what you noticed","smaller steps still count"].map(v=>`<button class="chip" data-friend="${v}">${v}</button>`).join("")}</div><div class="grow"></div><button class="btn dark" data-act="closeDay">close the day&nbsp;›</button>`),
+track:()=>(setOrb("top"),`<button class="back" data-go="home">← home</button><h1 class="h">track</h1><p class="p">Tension before and after each attempt this week (0–100).</p><div class="card">${chart()}<span class="p" style="font-size:12px">light: before · teal: after</span></div><div class="card mint"><span>on average, tension dropped <b style="font-weight:600">27 points</b> after you tried.</span></div><button class="item" data-go="patterns"><span class="t"><b>patterns we noticed</b><small>with the reasons</small></span>›</button><div class="grow"></div>`),
+patterns:()=>(setOrb("none"),`<button class="back" data-go="track">← track</button><h1 class="h">patterns we noticed</h1><p class="p">Suggestions, not judgements. You decide what to keep.</p>${[["family gatherings after work feel hardest","4 of your 6 hardest ratings were evening family events."],["starting small helps you stay longer","Small steps: average 24 minutes. Full steps: 9."]].map(([t,w],i)=>`<div class="card"><span class="big" style="font-size:18px">${t}</span><div class="card mint" style="padding:12px 14px;border-radius:16px"><span class="lab">why we think so</span><span style="font-size:14px">${w}</span></div><div class="chips"><button class="chip" aria-pressed="true" data-pat="${i}">keep</button><button class="chip" data-pat="${i}">not right</button></div></div>`).join("")}<div class="grow"></div><button class="btn dark" data-go="${S.therapist.connected?"preview":"connected"}">share with my therapist&nbsp;›</button><button class="btn ghost" data-go="ladder">keep private</button>`),
+ladder:()=>(setOrb("top"),`<button class="back" data-go="home">← home</button><div class="card dark"><span class="lab">my goal</span><span class="big" style="color:#fff">${esc(S.goal)}</span><span style="font-size:14px;opacity:.85">♡ for ${esc(S.forWhom)}</span></div>${S.rungs.slice().reverse().map((r,i)=>`<div class="item" style="${r[1]==="next"?"background:var(--mint)":""}"><b style="font-weight:300;font-size:20px;color:var(--teal);width:20px">${5-i}</b><span class="t" style="font-size:15px">${esc(r[0])}</span><span style="color:${r[1]==="goal"?"var(--rust)":"var(--teal)"};font-weight:500">${{goal:"★",next:"next",part:"◐",done:"✓"}[r[1]]}</span></div>`).join("")}<div class="grow"></div><button class="btn ghost" data-act="toHome">back to today</button>`),
+community:()=>(setOrb("top"),`<div class="wm">kin<span>space</span></div><h1 class="h l">you’re not<br>the only one.</h1><div class="card glass"><span class="lab" style="color:#fff">this week, near you</span><span class="h" style="color:#fff;font-size:28px">12 people practising</span><span style="font-size:13px;opacity:.85">your area · opt-in · no profiles</span></div><span class="eyebrow">message dump</span>${S.posts.map((p,i)=>`<button class="card" data-post="${i}"><span style="font-size:16px">${esc(p[0])}</span><span class="lab">anonymous · ${p[1]} · ⋯</span></button>`).join("")}<button class="btn dark" data-go="write">write something</button>${navBar("community")}`),
+write:()=>(setOrb("none"),`<button class="back" data-go="community">← cancel</button><h1 class="h">say it,<br>and let it go.</h1><textarea class="field" id="draft" rows="4" placeholder="Left the dinner early again. Still went though.">${esc(S.draft)}</textarea><div class="card"><div class="row"><span>post anonymously 🔒</span>${tog("anon",true)}</div><div class="row"><span>no replies or likes 🔒</span>${tog("noreply",true)}</div></div><p class="p" style="font-size:13px">Posts are reviewed for safety. If something sounds urgent, we’ll show help options first.</p><div class="grow"></div><button class="btn dark" data-act="post">let it go&nbsp;›</button>`),
+posted:()=>(setOrb("mid"),`<div class="grow"></div><div class="card glass" style="padding:26px 18px;gap:10px"><span class="h l" style="color:#fff">let go.</span><span>Your message is out there, without your name. People nearby can read it. Nobody can reply.</span></div><div class="card"><span class="lab">community guidelines</span><span style="font-size:14px">· no names, no places, no photos<br>· kindness only; no advice unless asked<br>· mute or report any post</span></div><div class="grow"></div><button class="btn" data-go="community">back to community</button>`),
+helphome:()=>(setOrb("none"),`<div class="wm">kin<span>space</span></div><h1 class="h l">help, when<br>you want it.</h1>${S.therapist.connected?`<div class="card dark"><span class="lab">your therapist</span><span class="big" style="color:#fff">${S.therapist.name} · connected</span><span style="font-size:13px;opacity:.8">sharing: ${Object.entries(S.share).filter(e=>e[1]).map(e=>e[0]).join(", ")||"nothing"}</span></div>`:`<button class="card dark" data-go="code"><span class="lab">your therapist</span><span class="big" style="color:#fff">connect with a code</span><span style="font-size:13px;opacity:.8">optional · nothing is shared until you choose</span></button>`}
+ <button class="item" data-go="${S.therapist.connected?"share":"code"}"><span class="t"><b>what I share</b><small>choose and preview, stop any time</small></span>›</button><button class="item" data-go="fromther"><span class="t"><b>from my therapist</b><small>agreed steps · reviewed Monday</small></span>›</button><button class="item" data-go="findhelp"><span class="t"><b>find help</b><small>what kind of support fits me</small></span>›</button><button class="item urgent" data-go="urgent"><span class="t"><b>urgent help</b><small>Tele-MANAS 14416 · free, 24×7</small></span>›</button>${navBar("help")}`),
+connected:()=>(setOrb("mid"),`<div class="grow"></div><div class="card glass" style="padding:26px 18px;gap:10px"><span class="h" style="color:#fff">connected with<br>${S.therapist.name}</span><span>Nothing is shared until you choose. You’ll always see a preview first.</span></div><div class="grow"></div><button class="btn" data-go="share">choose what to share&nbsp;›</button><button class="btn ghost" data-act="${S.onboarded?"toHelp":"toGoal"}">not now</button>`),
+share:()=>(setOrb("none"),`<button class="back" data-go="helphome">← help</button><h1 class="h">what ${S.therapist.name.split(" ").pop()} can see</h1><div class="card" style="gap:14px">${[["steps","steps and attempts","did it, part of it, not today"],["tension","tension before and after","0–100 ratings"],["patterns","pattern summary","with the reasons"],["journal","journal and night replay","your own words"]].map(([k,t,d])=>`<div class="row"><span><span style="display:block;font-size:16px">${t}</span><small style="color:var(--soft)">${d}</small></span>${tog("share."+k,S.share[k])}</div>`).join("")}</div><div class="card mint"><span class="lab">when</span><span>weekly, the evening before your session</span></div><div class="grow"></div><button class="btn dark" data-go="preview">preview&nbsp;›</button>`),
+preview:()=>(setOrb("none"),`<button class="back" data-go="share">← back</button><h1 class="h">exactly what<br>they will see</h1><div class="card dash" style="gap:10px"><span class="lab">week of 15–21</span>${S.share.steps?`<span class="big" style="font-size:17px">${S.attempts} steps tried · 1 partial · 1 not today</span>`:""}${S.share.tension?`<span>tension: 72 → 41 on average</span>`:""}${S.share.patterns?`<span>pattern: evening family events feel hardest (4 of 6 ratings)</span>`:""}<span style="font-size:13px;color:var(--soft)">journal: ${S.share.journal?"shared":"not shared"}</span>${!S.share.steps&&!S.share.tension&&!S.share.patterns&&!S.share.journal?'<span class="p">Nothing selected. Nothing will be sent.</span>':""}</div><div class="grow"></div><button class="btn dark" data-act="send">send summary&nbsp;›</button><button class="btn ghost" data-go="helphome">keep private</button><span class="link" style="font-size:13px">You can stop sharing any time in help.</span>`),
+fromther:()=>(setOrb("none"),`<button class="back" data-go="helphome">← help</button><h1 class="h">from ${S.therapist.name}</h1><span class="chip" style="align-self:flex-start;background:var(--mint);border:0;color:var(--teal)">✓ summary reviewed · Monday</span><div class="card"><span class="lab">a note</span><span class="big" style="font-size:17px">“Great that you stayed at the café. Let’s try the family call next.”</span></div><span class="eyebrow">agreed steps</span><div class="item"><span class="t"><b>say one line on the family call</b><small>agreed Monday</small></span><span style="color:var(--teal)">✓</span></div><div class="item"><span class="t"><b>repeat the café step</b><small>agreed last week</small></span><span style="color:var(--teal)">✓</span></div><div class="grow"></div><button class="btn dark" data-go="ladder">see my ladder&nbsp;›</button>`),
+findhelp:()=>(setOrb("none"),`<button class="back" data-go="helphome">← help</button><h1 class="h">what would help<br>most right now?</h1><div class="chips">${["someone to talk to","practical steps","not sure"].map(v=>`<button class="chip" aria-pressed="${(S.need||"practical steps")===v}" data-set="need" data-val="${v}">${v}</button>`).join("")}</div><span class="eyebrow">options that fit</span>${(S.need==="someone to talk to"?[["peer support group","free · weekly · online"],["college counselling cell","free · in person"]]:S.need==="not sure"?[["what is a first session like?","a 2-minute explainer"],["college counselling cell","free · in person · this week"]]:[["online CBT therapist","practical, step-based · ₹800–1,500"],["college counselling cell","free · in person · this week"]]).map(([t,d])=>`<div class="item"><span class="t"><b>${t}</b><small>${d}</small></span>›</div>`).join("")}<p class="p" style="font-size:13px">No labels or diagnosis needed. These are examples for the prototype.</p><div class="grow"></div>`),
+urgent:()=>(setOrb("none"),`<button class="back" data-go="helphome">← back</button><h1 class="h">if you feel unsafe<br>right now</h1><div class="card peach" style="gap:10px"><span class="big" style="color:var(--rust);font-size:24px">Tele-MANAS</span><span>Free, 24×7, in many Indian languages.</span><button class="btn rust" data-act="call">call 14416</button><span style="font-size:13px;color:var(--soft);user-select:all">Number: 14416</span></div><span class="eyebrow">or reach someone you trust</span><div class="item"><span class="t"><b>Rahul (brother)</b><small>call or message</small></span>›</div><div class="item"><span class="t"><b>Meera (friend)</b><small>call or message</small></span>›</div><button class="item" data-go="pocket"><span class="t"><b>breathe with me</b><small>one minute, guided</small></span>›</button><div class="grow"></div><p class="p" style="font-size:13px;text-align:center">KinSpace is not an emergency service. If you are in immediate danger, call 112.</p>`),
+me:()=>(setOrb("top"),`<button class="back" data-go="home">← home</button><h1 class="h l">me</h1><div class="card"><span class="lab">my strengths</span><div class="chips">${["good listener","curious","loyal"].map(s=>`<span class="chip" style="background:var(--mint);border:0">${s}</span>`).join("")}</div></div><button class="item" data-go="reminders"><span class="t"><b>reminders and quiet hours</b><small>gentle · quiet 10 pm – 8 am</small></span>›</button><button class="item" data-go="privacy"><span class="t"><b>privacy and data</b><small>consent log, download, delete</small></span>›</button><div class="item"><span class="t"><b>language</b><small>English</small></span>›</div><div class="item"><span class="t"><b>about KinSpace</b><small>a wellbeing service, not a medical device</small></span>›</div><div class="grow"></div>`),
+privacy:()=>(setOrb("none"),`<button class="back" data-go="me">← me</button><h1 class="h">your data,<br>your call.</h1><div class="card"><span class="lab">consent log</span>${(S.therapist.connected?[["14 Nov","connected "+S.therapist.name],["15 Nov","chose what to share"],["18 Nov","summary sent, reviewed"]]:[["today","account created, private"]]).map(([d,t])=>`<div style="display:flex;gap:12px"><b style="color:var(--teal);font-weight:500;font-size:13px">${d}</b><span style="font-size:14px">${t}</span></div>`).join("")}</div>${S.therapist.connected?`<button class="item" data-act="stopShare"><span class="t"><b>sharing with ${S.therapist.name}</b><small>tap to stop sharing</small></span><span style="color:var(--teal)">stop</span></button>`:""}<div class="item"><span class="t"><b>download my data</b><small>a copy of everything</small></span>›</div><button class="item urgent" data-act="askDelete"><span class="t"><b>delete everything</b><small>cannot be undone</small></span>›</button><div class="grow"></div><p class="p" style="font-size:13px;text-align:center">Private data never leaves your phone unless you share it.</p>`),
+reminders:()=>(setOrb("none"),`<button class="back" data-go="me">← me</button><h1 class="h">gentle,<br>never pushy.</h1><div class="card" style="gap:14px"><div class="row"><span>step reminders<br><small style="color:var(--soft)">once a day</small></span>${tog("reminders",S.reminders)}</div><div class="row"><span>strengths reminders<br><small style="color:var(--soft)">before a step</small></span>${tog("strengthRem",S.strengthRem)}</div><div class="row"><span>night replay nudge<br><small style="color:var(--soft)">9:30 pm</small></span>${tog("nudge",S.nudge)}</div><div class="row"><span>streaks<br><small style="color:var(--soft)">never</small></span><span class="toggle" aria-checked="false" style="opacity:.5"></span></div></div><div class="card mint"><span class="lab">quiet hours</span><span class="big">10 pm – 8 am</span><span style="font-size:13px;color:var(--soft)">Nothing buzzes, except pocket mode when you start it.</span></div><div class="grow"></div>`)
+};
+function homeCard(){
+ if(S.today==="before") return `<div class="row" style="font-size:12px;opacity:.85"><span>today’s step · before</span><span>6 pm, café</span></div><p class="step">${esc(S.step)}</p><span style="font-size:13px;opacity:.9">♡ each attempt matters</span><div class="grow"></div><div class="row"><button style="font-size:14px;text-decoration:underline;text-underline-offset:3px" data-sheet="help">need help?</button><button class="btn" style="width:auto;padding:8px 8px 8px 20px" data-go="choices">start <span style="width:30px;height:30px;border-radius:50%;background:#eef1f6;display:grid;place-items:center;font-size:14px">›</span></button></div>`;
+ if(S.today==="during") return `<div class="row" style="font-size:12px;opacity:.85"><span>in session</span><span id="timer">00:00</span></div><p class="step">one breath, then one question.</p><span style="font-size:13px;opacity:.9">try: “${esc(S.line)}”</span><div style="display:flex;gap:8px"><button class="btn onglass" data-go="pocket">pocket mode</button><button class="btn onglass" data-sheet="help">smaller step</button></div><div class="grow"></div><div class="row"><span style="font-size:13px;opacity:.9">pause any time</span><button class="btn" style="width:auto;padding:8px 8px 8px 20px" data-act="endSession">done <span style="width:30px;height:30px;border-radius:50%;background:#eef1f6;display:grid;place-items:center;font-size:14px">›</span></button></div>`;
+ return `<div class="row" style="font-size:12px;opacity:.85"><span>how did it go?</span><span>after</span></div><div class="chips">${[["did","did it"],["part","part of it"],["not","not today"]].map(([k,l])=>`<button class="chip glasschip" aria-pressed="${S.outcome===k}" data-out="${k}">${l}</button>`).join("")}</div><div class="row" style="font-size:13px"><span>tension now</span><span><span style="opacity:.75">before ${S.before} →</span> <b id="av">${S.after}</b> / 100</span></div><input type="range" id="after" min="0" max="100" value="${S.after}" aria-label="Tension now"><div class="grow"></div><div class="row"><span style="font-size:13px;opacity:.9">${S.outcome==="not"?"♡ that counts too":"♡ each attempt matters"}</span><button class="btn" style="width:auto;padding:8px 8px 8px 20px" data-go="reflect">reflect <span style="width:30px;height:30px;border-radius:50%;background:#eef1f6;display:grid;place-items:center;font-size:14px">›</span></button></div>`;}
+function chart(){const d=[["sun",72,40],["tue",65,38],["wed",80,58],["thu",S.before,S.today==="after"||S.attempts>3?S.after:null]]; let s='<svg viewBox="0 0 300 150" style="width:100%;height:auto" role="img" aria-label="Tension before and after each attempt">'; d.forEach(([day,b,a],i)=>{const x=40+i*72,y=v=>10+110*(1-v/100); s+=`<rect x="${x-14}" y="${y(b)}" width="12" height="${120-y(b)}" rx="6" fill="#b8dfd2"/>`; if(a!=null) s+=`<rect x="${x+2}" y="${y(a)}" width="12" height="${120-y(a)}" rx="6" fill="#2f8a86"/>`; s+=`<text x="${x}" y="142" text-anchor="middle" font-size="12" fill="#4d5d78" font-family="Inter Tight,sans-serif">${day}</text>`;}); return s+"</svg>";}
+
+const SHEETS={
+help:()=>`<h2>make it smaller</h2><p>Pick the step that feels possible today. It still counts.</p><div class="biglist">${["ask someone the time","smile and say hi","stand near a group"].map(s=>`<button data-pick="${s}">${s}</button>`).join("")}<small>2 minutes · no talking needed</small></div><div class="card glass" style="margin-top:12px"><span>your strength: <b>you’re a good listener.</b> a question is enough; you don’t have to fill the silence.</span></div>`,
+relieve:()=>`<h2>relieve</h2><p>For right now. Nothing here is visible to others.</p><div class="biglist"><button data-go="pocket" aria-pressed="true">pocket mode<small>breathing by vibration, screen off · 1m</small></button><button data-act="ground">ground<small>5 things you can see · 1m</small></button><button data-go="pocket">slow breath<small>in 4, out 6 · 2 sets</small></button></div>`,
+report:i=>`<h2>this post</h2><button class="sopt warn" data-go="urgent"><b>this sounds serious</b><small>We’ll show help options and alert our safety team.</small></button><button class="sopt" data-act="mute"><b>mute similar posts</b><small>You won’t see posts like this.</small></button><button class="sopt" data-act="report"><b>report</b><small>Names someone, or breaks the guidelines.</small></button>`,
+del:()=>`<h2>delete everything?</h2><p style="color:var(--soft);opacity:1">Your goals, steps, journal and ratings will be removed from this device. This cannot be undone.</p><button class="btn rust" data-act="doDelete">delete everything</button><button class="btn ghost" style="margin-top:8px" data-act="closeSheet">keep my data</button>`
+};
+
+/* ---------- RENDER ---------- */
+function go(k){stopPocket(); closeSheet(); cur=k; render();}
+function render(){clearInterval(timer); screen.classList.toggle("dark",cur==="pocket"); view.className="view"+(cur==="pocket"?" pocket":""); view.innerHTML=SC[cur](); view.scrollTop=0; renderJump();
+ if(cur==="home"&&S.today==="during"){const tick=()=>{const s=Math.floor((Date.now()-t0)/1000),el=document.getElementById("timer"); if(el) el.textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}; tick(); timer=setInterval(tick,1000);}
+ if(cur==="pocket") startPocket();}
+function openSheet(k,arg){closeSheet(); const sc=document.createElement("div"); sc.className="scrim"; sc.onclick=closeSheet; const sh=document.createElement("div"); sh.className="sheet"+(k==="report"||k==="del"?" white":""); sh.setAttribute("role","dialog"); sh.setAttribute("aria-label",k); sh.innerHTML=`<div class="grab"></div>`+SHEETS[k](arg); screen.append(sc,sh); sheet=[sc,sh];}
+function closeSheet(){if(sheet){sheet.forEach(n=>n.remove()); sheet=null;}}
+function toast(m){clearTimeout(toastT); screen.querySelector(".toast")?.remove(); const t=document.createElement("div"); t.className="toast"; t.setAttribute("role","status"); t.textContent=m; screen.append(t); toastT=setTimeout(()=>t.remove(),2400);}
+const vib=p=>{try{if(!navigator.vibrate||(navigator.userActivation&&!navigator.userActivation.hasBeenActive)) return false; return navigator.vibrate(p);}catch(e){return false}};
+function startPocket(){let inhale=true; const note=document.getElementById("hapnote"); if(note) note.textContent=("vibrate" in navigator)?"":"This browser can’t vibrate, so follow the light. On a phone the pulse does this for you.";
+ const cyc=()=>{const p=document.getElementById("pulse"), b=document.getElementById("breath"); if(!p) return; p.style.transitionDuration=(inhale?4:6)+"s"; p.style.transform=`scale(${inhale?1.25:.75})`; b.textContent=inhale?"breathe in · 4":"breathe out · 6"; vib(inhale?[900]:[120,280,120,280,120]); pocketT=setTimeout(()=>{inhale=!inhale; cyc();},inhale?4000:6000);}; cyc();}
+function stopPocket(){if(!pocketT) return; clearTimeout(pocketT); pocketT=null; vib(0);}
+
+const ACT={
+skipOnb:()=>{S.onboarded=true; save(); go("home");},
+connect:()=>{S.therapist.connected=true; S.route="therapist"; save(); go(S.onboarded?"connected":"goal"); toast("Connected. Nothing is shared yet.");},
+saveGoal:()=>{const g=document.getElementById("goalF").value.trim(), s=document.getElementById("shortF").value.trim(); if(g) S.goal=g; if(s) S.shortGoal=s; save(); go("whofor");},
+finishOnb:()=>{S.onboarded=true; save(); go("home");},
+newLine:()=>{const L=["is your birthday soon? mine’s in may.","how do you know the host?","have you tried the coffee here?","what are you up to this weekend?"]; S.line=L[(L.indexOf(S.line)+1)%L.length]; save(); render();},
+startSession:()=>{S.today="during"; t0=Date.now(); save(); go("home");},
+endSession:()=>{S.today="after"; save(); go("home");},
+pocketDone:()=>{stopPocket(); S.today="after"; save(); go("home");},
+pocketSmaller:()=>{stopPocket(); S.today="during"; go("home"); openSheet("help");},
+addLadder:()=>{S.attempts++; const r=S.rungs.find(r=>r[1]==="next"); S.today="before"; save(); go("home"); toast("Added to your ladder.");},
+toHome:()=>{S.today="before"; save(); go("home");},
+r1:()=>{S.replay.fact=document.getElementById("fact").value; save(); go("replay2");},
+closeDay:()=>{S.replay.friend=document.getElementById("friend").value; save(); go("home"); toast("Day closed. Rest well.");},
+post:()=>{const v=document.getElementById("draft").value.trim(); if(!v){toast("Write a few words first.");return;} if(/kill|suicide|end it|don’t see the point|don't see the point|hurt myself/i.test(v)){S.draft=v; save(); go("urgent"); toast("Before posting, here is help that’s available now."); return;} S.posts.unshift([v,"now"]); S.draft=""; save(); go("posted");},
+send:()=>{save(); go("fromther"); toast("Summary sent. You can stop sharing any time.");},
+toHelp:()=>go("helphome"), toGoal:()=>go("goal"),
+call:()=>toast("In the real app this opens your phone dialer: 14416."),
+ground:()=>{closeSheet(); toast("Name 5 things you can see, slowly.");},
+mute:()=>{closeSheet(); toast("Muted similar posts.");}, report:()=>{closeSheet(); toast("Reported. Thank you.");},
+stopShare:()=>{S.share={steps:false,tension:false,patterns:false,journal:false}; save(); render(); toast("Sharing stopped. Nothing more will be sent.");},
+askDelete:()=>openSheet("del"), closeSheet:()=>closeSheet(),
+doDelete:()=>{S=JSON.parse(JSON.stringify(DEF)); save(); go("welcome"); toast("Everything deleted.");}
+};
+screen.addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; const d=b.dataset;
+ if(d.go) return go(d.go); if(d.sheet) return openSheet(d.sheet); if(d.act&&ACT[d.act]) return ACT[d.act]();
+ if(d.set){S[d.set]=d.val; save(); return render();}
+ if(d.tog){const k=d.tog; if(k.startsWith("share.")){const s=k.split(".")[1]; S.share[s]=!S.share[s];} else if(k in S){S[k]=!S[k];} save(); b.setAttribute("aria-checked",b.getAttribute("aria-checked")!=="true"); return;}
+ if(d.idea){S.goal=d.idea; save(); return render();}
+ if(d.out){S.outcome=d.out; save(); return render();}
+ if(d.hap){S.replay.happened=d.hap; save(); return render();}
+ if(d.friend){const f=document.getElementById("friend"); f.value=(f.value+" "+d.friend).trim(); S.replay.friend=f.value; save(); return;}
+ if(d.pick){closeSheet(); S.step=d.pick+"."; S.today="before"; save(); go("home"); toast("Step made smaller. It still counts."); return;}
+ if(d.post!=null) return openSheet("report",d.post);
+ if(d.pat!=null){b.parentElement.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c===b)); return;}
+});
+screen.addEventListener("input",e=>{const t=e.target;
+ if(t.id==="before"){S.before=+t.value; document.getElementById("bv").textContent=S.before; save();}
+ if(t.id==="after"){S.after=+t.value; document.getElementById("av").textContent=S.after; save();}
+ if(t.dataset.ref){S.reflect[t.dataset.ref]=t.value; save();}
+ if(t.id==="draft"){S.draft=t.value; save();}
+});
+screen.addEventListener("dblclick",()=>{if(cur==="pocket") toast("Screen awake. Pocket mode is still running.");});
+
+/* ---------- JUMP PANEL ---------- */
+const FLOWS=[["A · Onboarding",[["welcome","Welcome"],["promise","Our promise"],["route","Choose a route"],["code","Therapist code"],["goal","Set a goal"],["whofor","Who it’s for"],["firststep","First step size"]]],
+ ["B · A session",[["home","Home"],["choices","Make choices"],["pocket","Pocket mode"],["reflect","Reflect"],["feedback","Feedback"]]],
+ ["C · Evening and progress",[["replay1","Night replay"],["track","Track"],["patterns","Patterns"],["ladder","Goal ladder"]]],
+ ["D · Community",[["community","Community"],["write","Write a message"],["posted","Posted"]]],
+ ["E · Help",[["helphome","Help"],["connected","Therapist connected"],["share","Choose what to share"],["preview","Share preview"],["fromther","From your therapist"],["findhelp","Find help"],["urgent","Urgent help"]]],
+ ["F · Me",[["me","Me"],["privacy","Privacy and data"],["reminders","Reminders"]]]];
+function renderJump(){const j=document.getElementById("jump"); const open=[...j.querySelectorAll("details")].map(d=>d.open); j.innerHTML=FLOWS.map(([t,items],i)=>`<details ${open[i]??(i<2)?"open":""}><summary>${t}</summary>${items.map(([k,l])=>`<button data-jump="${k}" ${cur===k?'style="color:var(--ink);font-weight:500"':""}>${l}</button>`).join("")}</details>`).join("");}
+document.getElementById("jump").addEventListener("click",e=>{const b=e.target.closest("[data-jump]"); if(!b) return; const k=b.dataset.jump;
+ if(k==="home"&&S.today==="during") t0=Date.now(); if(["home","community","helphome","me"].includes(k)) S.onboarded=true; go(k);});
+document.getElementById("reset").addEventListener("click",()=>{S=JSON.parse(JSON.stringify(DEF)); save(); go("welcome");});
+screen.addEventListener("keydown",e=>{if(e.key==="Escape") closeSheet();});
+cur=S.onboarded?"home":"welcome"; if(S.today==="during") t0=Date.now(); render();
+})();
+</script>
+</body>
+</html>
